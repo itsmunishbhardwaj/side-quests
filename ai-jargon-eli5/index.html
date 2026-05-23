@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Jargon, ELI5</title>
+<meta name="description" content="A hand-picked stash of the clearest ELI5 explanations on the internet for the AI words people throw around." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mynerve&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fef9e7;
+    --ink: #1a1a1a;
+    --pink: #ff3c8e;
+    --lemon: #ffe24d;
+    --cyan: #3ddbd9;
+    --lime: #a4ff3c;
+    --tangerine: #ff9a52;
+    --lavender: #c89aff;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Mynerve', 'Comic Sans MS', cursive;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* paper grain */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: 0.6;
+    mix-blend-mode: multiply;
+  }
+
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* HEADER */
+  header.masthead {
+    margin-bottom: 40px;
+    text-align: left;
+  }
+  .kicker {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--lemon);
+    font-family: 'Mynerve', cursive;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    padding: 4px 14px 6px;
+    transform: rotate(-1.5deg);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: 'Mynerve', cursive;
+    font-size: clamp(72px, 13vw, 150px);
+    line-height: 0.95;
+    margin: 0 0 14px;
+    letter-spacing: 0;
+  }
+  h1 .blob {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--paper);
+    padding: 0 14px;
+    transform: rotate(-2deg) translateY(-2px);
+    margin: 0 4px;
+  }
+  h1 .blob.eli5 {
+    background: var(--cyan);
+    color: var(--ink);
+    transform: rotate(1.5deg);
+  }
+  .tagline {
+    font-size: 24px;
+    line-height: 1.4;
+    max-width: 680px;
+    margin: 0 0 28px;
+    color: #333;
+  }
+  .tagline em {
+    background: var(--lemon);
+    font-style: normal;
+    padding: 2px 6px;
+  }
+
+  /* CONTROLS */
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 36px;
+  }
+  .search {
+    flex: 1 1 280px;
+    max-width: 420px;
+    position: relative;
+  }
+  .search input {
+    width: 100%;
+    font-family: 'Mynerve', cursive;
+    font-size: 20px;
+    padding: 12px 16px 14px 44px;
+    border: 3px solid var(--ink);
+    background: var(--paper);
+    border-radius: 0;
+    box-shadow: 4px 4px 0 var(--ink);
+    outline: none;
+    transition: transform 0.1s;
+  }
+  .search input:focus {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .search::before {
+    content: "🔍";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+  }
+  .surprise {
+    font-family: 'Mynerve', cursive;
+    font-size: 20px;
+    background: var(--lime);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    padding: 10px 20px 12px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--ink);
+    transform: rotate(1deg);
+    transition: transform 0.1s;
+    letter-spacing: 0;
+  }
+  .surprise:hover {
+    transform: rotate(0) translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .surprise:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--ink);
+  }
+  .counter {
+    font-family: 'Mynerve', cursive;
+    font-size: 18px;
+    color: #555;
+    margin-left: auto;
+  }
+  .counter strong { color: var(--ink); }
+
+  /* SECTIONS */
+  section.terms {
+    margin-bottom: 56px;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .section-head h2 {
+    font-family: 'Mynerve', cursive;
+    font-size: clamp(42px, 6vw, 64px);
+    margin: 0;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+  .section-head h2 .swatch {
+    display: inline-block;
+    background: currentColor;
+    padding: 0 10px;
+    color: var(--ink) !important;
+  }
+  .section-head .num {
+    font-family: 'Mynerve', cursive;
+    font-size: 22px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0 12px 4px;
+    transform: rotate(-2deg);
+  }
+
+  /* CARD GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+    padding: 18px 18px 50px;
+    border: 3px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--ink);
+    position: relative;
+    transition: transform 0.12s ease-out, box-shadow 0.12s ease-out;
+    min-height: 150px;
+  }
+  .card .term {
+    font-family: 'Mynerve', cursive;
+    font-size: 32px;
+    line-height: 1;
+    margin: 0 0 6px;
+    letter-spacing: 0;
+  }
+  .card .hook {
+    font-size: 19px;
+    line-height: 1.3;
+    margin: 0;
+    color: var(--ink);
+    opacity: 0.9;
+  }
+  .card .arrow {
+    position: absolute;
+    bottom: 12px;
+    right: 14px;
+    font-family: 'Mynerve', cursive;
+    font-size: 17px;
+    letter-spacing: 0;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2px 12px 4px;
+  }
+  .card:hover {
+    transform: rotate(0) translate(-3px, -3px) !important;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+
+  /* section accents */
+  .basics .card { background: var(--lemon); }
+  .thinks .card { background: var(--cyan); }
+  .learns .card { background: var(--lime); }
+  .uses .card { background: var(--pink); color: #fff; }
+  .uses .card .hook { color: #fff; opacity: 0.95; }
+  .uses .card .arrow { background: var(--paper); color: var(--ink); }
+  .safe .card { background: var(--tangerine); }
+  .hood .card { background: var(--lavender); }
+
+  /* random-ish rotations via nth-child */
+  .card:nth-child(7n+1) { transform: rotate(-1.2deg); }
+  .card:nth-child(7n+2) { transform: rotate(0.8deg); }
+  .card:nth-child(7n+3) { transform: rotate(-0.4deg); }
+  .card:nth-child(7n+4) { transform: rotate(1.4deg); }
+  .card:nth-child(7n+5) { transform: rotate(-0.9deg); }
+  .card:nth-child(7n+6) { transform: rotate(0.5deg); }
+  .card:nth-child(7n+7) { transform: rotate(-1.6deg); }
+
+  /* FOOTER */
+  footer {
+    margin-top: 64px;
+    padding-top: 28px;
+    border-top: 3px dashed var(--ink);
+    font-family: 'Mynerve', cursive;
+    font-size: 18px;
+    color: #444;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    align-items: center;
+  }
+  footer .stamp {
+    background: var(--ink);
+    color: var(--lemon);
+    padding: 2px 12px 4px;
+    letter-spacing: 0;
+    font-size: 18px;
+    transform: rotate(-1deg);
+  }
+  footer a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+  footer a:hover { background: var(--lemon); }
+
+  .empty-msg {
+    grid-column: 1 / -1;
+    font-family: 'Mynerve', cursive;
+    font-size: 24px;
+    padding: 30px;
+    text-align: center;
+    border: 3px dashed var(--ink);
+    display: none;
+  }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .wrap { padding: 28px 16px 60px; }
+    .grid { grid-template-columns: 1fr; gap: 14px; }
+    .card { min-height: auto; }
+    .card:nth-child(7n+1) { transform: rotate(-0.4deg); }
+    .card:nth-child(7n+2) { transform: rotate(0.3deg); }
+    .card:nth-child(7n+3) { transform: rotate(-0.2deg); }
+    .card:nth-child(7n+4) { transform: rotate(0.4deg); }
+    .card:nth-child(7n+5) { transform: rotate(-0.3deg); }
+    .card:nth-child(7n+6) { transform: rotate(0.2deg); }
+    .card:nth-child(7n+7) { transform: rotate(-0.5deg); }
+    .counter { margin-left: 0; width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="kicker">side-quest №2 · a zine</div>
+    <h1>AI Jargon<span class="blob">,</span><br><span class="blob eli5">ELI5</span></h1>
+    <p class="tagline">a hand-picked stash of the clearest explanations on the internet for the AI words people throw around. one click <em>→</em> you get it.</p>
+  </header>
+
+  <div class="controls">
+    <div class="search">
+      <input type="text" id="search" placeholder="search a term…" autocomplete="off" />
+    </div>
+    <button class="surprise" id="surprise">🎲 surprise me</button>
+    <div class="counter"><strong id="count">42</strong> terms · all links open in a new tab</div>
+  </div>
+
+  <div class="empty-msg" id="empty">nothing matches that. try a shorter word?</div>
+
+  <!-- THE BASICS -->
+  <section class="terms basics">
+    <div class="section-head">
+      <span class="num">01</span>
+      <h2>The Basics</h2>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://writings.stephenwolfram.com/2023/02/what-is-chatgpt-doing-and-why-does-it-work/" target="_blank" rel="noopener">
+        <h3 class="term">LLM</h3>
+        <p class="hook">the thing typing back at you. trained on a stupendous pile of text.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://simonwillison.net/2023/Jun/8/gpt-tokenizers/" target="_blank" rel="noopener">
+        <h3 class="term">Token</h3>
+        <p class="hook">what the model actually sees. not words exactly — bits of words.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://simonwillison.net/2023/Oct/23/embeddings/" target="_blank" rel="noopener">
+        <h3 class="term">Embedding</h3>
+        <p class="hook">every word becomes a point in a high-dimensional starfield.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.ibm.com/think/topics/llm-parameters" target="_blank" rel="noopener">
+        <h3 class="term">Parameter</h3>
+        <p class="hook">knobs and dials. billions of them. all twiddled during training.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.ibm.com/think/topics/context-window" target="_blank" rel="noopener">
+        <h3 class="term">Context Window</h3>
+        <p class="hook">the model's working memory. blink and it forgets the start.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.cloudflare.com/learning/ai/inference-vs-training/" target="_blank" rel="noopener">
+        <h3 class="term">Inference</h3>
+        <p class="hook">what happens after training. the model actually thinking for you.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.ibm.com/think/topics/multimodal-ai" target="_blank" rel="noopener">
+        <h3 class="term">Multimodal</h3>
+        <p class="hook">it can see and hear and read. not just words anymore.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- HOW IT THINKS -->
+  <section class="terms thinks">
+    <div class="section-head">
+      <span class="num">02</span>
+      <h2>How It Thinks</h2>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">
+        <h3 class="term">Transformer</h3>
+        <p class="hook">the architecture that runs basically every AI you've heard of.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.3blue1brown.com/lessons/attention" target="_blank" rel="noopener">
+        <h3 class="term">Attention</h3>
+        <p class="hook">how a model figures out which words to care about most.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://e2eml.school/transformers.html" target="_blank" rel="noopener">
+        <h3 class="term">Self-Attention</h3>
+        <p class="hook">every word in a sentence looking at every other word, deciding what matters.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://learnprompting.org/docs/intermediate/configuration_hyperparameters" target="_blank" rel="noopener">
+        <h3 class="term">Temperature</h3>
+        <p class="hook">a creativity dial. low = boring &amp; safe. high = wild &amp; weird.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://huggingface.co/blog/how-to-generate" target="_blank" rel="noopener">
+        <h3 class="term">Top-p Sampling</h3>
+        <p class="hook">the model picks a word from the top slice of likely options.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.ibm.com/think/topics/ai-hallucinations" target="_blank" rel="noopener">
+        <h3 class="term">Hallucination</h3>
+        <p class="hook">when the model confidently makes stuff up. happens a lot.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- HOW IT LEARNS -->
+  <section class="terms learns">
+    <div class="section-head">
+      <span class="num">03</span>
+      <h2>How It Learns</h2>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://www.youtube.com/watch?v=zjkBMFhNj_g" target="_blank" rel="noopener">
+        <h3 class="term">Pretraining</h3>
+        <p class="hook">feed it the internet. let it predict the next word, over and over.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.cloudflare.com/learning/ai/what-is-fine-tuning/" target="_blank" rel="noopener">
+        <h3 class="term">Fine-tuning</h3>
+        <p class="hook">take a smart generalist, teach it your specific job.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://huggingface.co/blog/rlhf" target="_blank" rel="noopener">
+        <h3 class="term">RLHF</h3>
+        <p class="hook">humans rank responses. the model learns to be more helpful.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.anthropic.com/news/claudes-constitution" target="_blank" rel="noopener">
+        <h3 class="term">Constitutional AI</h3>
+        <p class="hook">give the model a written set of principles to live by.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.3blue1brown.com/lessons/neural-networks" target="_blank" rel="noopener">
+        <h3 class="term">Neural Network</h3>
+        <p class="hook">layers of fake neurons doing math. somehow this works.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.3blue1brown.com/lessons/gradient-descent" target="_blank" rel="noopener">
+        <h3 class="term">Gradient Descent</h3>
+        <p class="hook">rolling downhill toward 'less wrong'. that's how it learns.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.3blue1brown.com/lessons/backpropagation" target="_blank" rel="noopener">
+        <h3 class="term">Backpropagation</h3>
+        <p class="hook">the trick that lets a network figure out which knob to turn.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.ibm.com/think/topics/overfitting" target="_blank" rel="noopener">
+        <h3 class="term">Overfitting</h3>
+        <p class="hook">memorizing answers instead of actually learning. very bad.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- HOW WE USE IT -->
+  <section class="terms uses">
+    <div class="section-head">
+      <span class="num">04</span>
+      <h2>How We Use It</h2>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://learnprompting.org/docs/introduction" target="_blank" rel="noopener">
+        <h3 class="term">Prompt Engineering</h3>
+        <p class="hook">the art of asking really well so the model gives you what you want.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.promptingguide.ai/techniques/fewshot" target="_blank" rel="noopener">
+        <h3 class="term">Few-shot</h3>
+        <p class="hook">show the model 2–3 examples and it'll pattern-match the rest.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.promptingguide.ai/techniques/cot" target="_blank" rel="noopener">
+        <h3 class="term">Chain of Thought</h3>
+        <p class="hook">tell the model to think out loud. it suddenly gets way smarter.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.pinecone.io/learn/retrieval-augmented-generation/" target="_blank" rel="noopener">
+        <h3 class="term">RAG</h3>
+        <p class="hook">let the model look stuff up before answering. like an open-book test.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.pinecone.io/learn/vector-database/" target="_blank" rel="noopener">
+        <h3 class="term">Vector Database</h3>
+        <p class="hook">where you store all those embedding-starfield points for fast lookup.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">
+        <h3 class="term">Agent</h3>
+        <p class="hook">an LLM that takes actions in the world, not just spits out text.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview" target="_blank" rel="noopener">
+        <h3 class="term">Tool Use</h3>
+        <p class="hook">the model can call calculators, browse the web, run code.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener">
+        <h3 class="term">MCP</h3>
+        <p class="hook">a universal plug for hooking AI assistants up to your apps and data.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- KEEPING IT SAFE -->
+  <section class="terms safe">
+    <div class="section-head">
+      <span class="num">05</span>
+      <h2>Keeping It Safe</h2>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://en.wikipedia.org/wiki/AI_alignment" target="_blank" rel="noopener">
+        <h3 class="term">Alignment</h3>
+        <p class="hook">making sure the AI actually wants what you want it to want.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://learnprompting.org/docs/prompt_hacking/jailbreaking" target="_blank" rel="noopener">
+        <h3 class="term">Jailbreak</h3>
+        <p class="hook">tricking a model into bypassing its safety rules.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://huggingface.co/blog/red-teaming" target="_blank" rel="noopener">
+        <h3 class="term">Red Teaming</h3>
+        <p class="hook">professionally trying to break the AI before bad actors do.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.anthropic.com/research/mapping-mind-language-model" target="_blank" rel="noopener">
+        <h3 class="term">Interpretability</h3>
+        <p class="hook">cracking open the black box. figuring out what neurons are doing.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- UNDER THE HOOD -->
+  <section class="terms hood">
+    <div class="section-head">
+      <span class="num">06</span>
+      <h2>Under The Hood</h2>
+    </div>
+    <div class="grid">
+      <a class="card" href="https://en.wikipedia.org/wiki/Generative_pre-trained_transformer" target="_blank" rel="noopener">
+        <h3 class="term">GPT</h3>
+        <p class="hook">the family of models from OpenAI. 'generative pre-trained transformer'.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.anthropic.com/claude" target="_blank" rel="noopener">
+        <h3 class="term">Claude</h3>
+        <p class="hook">Anthropic's model family. you're talking to one right now (hi!).</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://en.wikipedia.org/wiki/Llama_(language_model)" target="_blank" rel="noopener">
+        <h3 class="term">Llama</h3>
+        <p class="hook">Meta's open-weight LLM family. you can run it on your laptop.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://jalammar.github.io/illustrated-stable-diffusion/" target="_blank" rel="noopener">
+        <h3 class="term">Diffusion Model</h3>
+        <p class="hook">how AI makes images. starts with noise, sculpts out a picture.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://blogs.nvidia.com/blog/whats-the-difference-between-a-cpu-and-a-gpu/" target="_blank" rel="noopener">
+        <h3 class="term">GPU</h3>
+        <p class="hook">the chip that does the massive parallel math AI needs.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://huggingface.co/docs/optimum/concept_guides/quantization" target="_blank" rel="noopener">
+        <h3 class="term">Quantization</h3>
+        <p class="hook">shrinking a model so it fits on smaller machines. fewer decimal places.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://www.ibm.com/think/topics/knowledge-distillation" target="_blank" rel="noopener">
+        <h3 class="term">Distillation</h3>
+        <p class="hook">training a small model to mimic a big one. lighter, almost as smart.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://huggingface.co/docs/peft/main/en/conceptual_guides/lora" target="_blank" rel="noopener">
+        <h3 class="term">LoRA</h3>
+        <p class="hook">fine-tune a model without touching the giant original. tiny add-on weights.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+      <a class="card" href="https://huggingface.co/blog/moe" target="_blank" rel="noopener">
+        <h3 class="term">Mixture of Experts</h3>
+        <p class="hook">many small expert models inside one big one. only the relevant ones fire.</p>
+        <span class="arrow">eli5 ↗</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <span class="stamp">made with love</span>
+    <span>side-quest №2 by <a href="https://github.com/itsmunishbhardwaj" target="_blank" rel="noopener">munish</a></span>
+    <span>·</span>
+    <span>got a better ELI5 link? open a PR.</span>
+  </footer>
+
+</div>
+
+<script>
+  const input = document.getElementById('search');
+  const cards = document.querySelectorAll('.card');
+  const sections = document.querySelectorAll('section.terms');
+  const empty = document.getElementById('empty');
+  const counter = document.getElementById('count');
+
+  counter.textContent = cards.length;
+
+  input.addEventListener('input', () => {
+    const q = input.value.toLowerCase().trim();
+    let visible = 0;
+    cards.forEach(c => {
+      const text = c.textContent.toLowerCase();
+      const show = !q || text.includes(q);
+      c.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    sections.forEach(s => {
+      const any = [...s.querySelectorAll('.card')].some(c => c.style.display !== 'none');
+      s.style.display = any ? '' : 'none';
+    });
+    empty.style.display = visible === 0 ? 'block' : 'none';
+    counter.textContent = visible;
+  });
+
+  document.getElementById('surprise').addEventListener('click', (e) => {
+    e.preventDefault();
+    const visible = [...cards].filter(c => c.style.display !== 'none');
+    if (!visible.length) return;
+    const pick = visible[Math.floor(Math.random() * visible.length)];
+    pick.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    pick.style.transition = 'transform 0.2s';
+    const original = pick.style.transform;
+    pick.style.transform = 'rotate(0) scale(1.06)';
+    setTimeout(() => { pick.style.transform = original; }, 600);
+  });
+</script>
+</body>
+</html>
