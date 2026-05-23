@@ -431,1193 +431,7 @@
 
   <div class="empty-msg" id="empty">nothing matches that. try a shorter word?</div>
 
-  <!-- THE BASICS -->
-  <section class="terms basics">
-    <div class="section-head">
-      <span class="num">01</span>
-      <h2>The Basics</h2>
-    </div>
-    <div class="grid">
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">LLM</h3>
-          <p class="hook">the thing typing back at you. trained on a stupendous pile of text.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="10" y="70" width="70" height="42" rx="8" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="110" y="42" width="100" height="98" rx="12" fill="#ffe24d" stroke="#1a1a1a" stroke-width="3"/>
-                <rect x="240" y="70" width="70" height="42" rx="8" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="82" y1="91" x2="106" y2="91" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <line x1="212" y1="91" x2="236" y2="91" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-              </g>
-              <text x="45" y="98" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="18">hi!</text>
-              <text x="160" y="100" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="30">LLM</text>
-              <text x="275" y="98" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="16">hey :)</text>
-              <text x="160" y="168" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="14">text in → text out, one token at a time</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>When you chat with ChatGPT, Claude, or Gemini — that's an LLM. It's a giant pattern-matching engine that has read a stupendous amount of text and learned to predict what word comes next, again and again.</p>
-            <p>The "large" is doing real work: these models have hundreds of billions of internal numbers, trained on basically the whole readable internet plus a lot of books. That scale is where the surprising capabilities come from.</p>
-            <p>It doesn't "know" things the way you do. It's making statistical guesses one word at a time — those guesses just happen to be very useful because the patterns in human language carry a lot of meaning with them.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Token</h3>
-          <p class="hook">what the model actually sees. not words exactly — bits of words.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="80" y="25" width="160" height="38" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <line x1="141" y1="20" x2="141" y2="68" stroke="#ff3c8e" stroke-width="2" stroke-dasharray="4,3"/>
-                <line x1="168" y1="20" x2="168" y2="68" stroke="#ff3c8e" stroke-width="2" stroke-dasharray="4,3"/>
-                <line x1="110" y1="68" x2="65" y2="100" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <line x1="155" y1="68" x2="155" y2="100" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <line x1="200" y1="68" x2="245" y2="100" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <rect x="20" y="105" width="90" height="40" rx="6" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="125" y="105" width="60" height="40" rx="6" fill="#3ddbd9" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="200" y="105" width="92" height="40" rx="6" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2.5"/>
-              </g>
-              <text x="160" y="50" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18">tokenization</text>
-              <text x="65" y="131" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">token</text>
-              <text x="155" y="131" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">iz</text>
-              <text x="246" y="131" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">ation</text>
-              <text x="160" y="170" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">1 word → 3 tokens</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>The model doesn't see words. It sees tokens — chunks of characters that are usually 3–5 letters long. "Hello" is one token, but "tokenization" might be three: "token", "iz", "ation."</p>
-            <p>Why chunks instead of words? There are millions of English words, but only ~50,000 unique tokens cover almost everything you'd ever write. That's a much friendlier alphabet for a model to learn.</p>
-            <p>When you hear "the context window is 200k tokens" — that's roughly 150k English words of stuff the model can see at once.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Embedding</h3>
-          <p class="hook">every word becomes a point in a high-dimensional starfield.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <line x1="35" y1="155" x2="295" y2="155" stroke="#1a1a1a" stroke-width="2"/>
-                <line x1="35" y1="155" x2="35" y2="20" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="105" cy="80" r="10" fill="#ff3c8e" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="128" cy="98" r="10" fill="#ff3c8e" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="85" cy="58" r="7" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="245" cy="128" r="10" fill="#3ddbd9" stroke="#1a1a1a" stroke-width="2"/>
-              </g>
-              <text x="105" y="65" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="13">cat</text>
-              <text x="148" y="115" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="13">dog</text>
-              <text x="85" y="48" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="11">kitten</text>
-              <text x="245" y="148" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="13">car</text>
-              <text x="165" y="175" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">similar things land close together</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>An embedding is a way to turn a word (or sentence, or image) into a long list of numbers — usually a few hundred to a few thousand of them.</p>
-            <p>The cool trick: similar things end up close together in this numerical space. "Cat" and "dog" land near each other; "cat" and "calculator" land far apart. The numbers themselves are meaningless to humans, but distances and directions encode meaning.</p>
-            <p>This is the foundation of semantic search, vector databases, and a lot of how modern AI "understands" stuff. Words → points in space → math.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Parameter</h3>
-          <p class="hook">knobs and dials. billions of them. all twiddled during training.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <line x1="60" y1="55" x2="155" y2="40" stroke="#1a1a1a" stroke-width="1"/>
-                <line x1="60" y1="55" x2="155" y2="120" stroke="#1a1a1a" stroke-width="1.5"/>
-                <line x1="60" y1="105" x2="155" y2="40" stroke="#1a1a1a" stroke-width="2"/>
-                <line x1="60" y1="105" x2="155" y2="80" stroke="#1a1a1a" stroke-width="1"/>
-                <line x1="60" y1="105" x2="155" y2="120" stroke="#1a1a1a" stroke-width="3"/>
-                <line x1="165" y1="40" x2="260" y2="80" stroke="#1a1a1a" stroke-width="2"/>
-                <line x1="165" y1="80" x2="260" y2="80" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="165" y1="120" x2="260" y2="80" stroke="#1a1a1a" stroke-width="1.5"/>
-                <line x1="60" y1="55" x2="155" y2="80" stroke="#ff3c8e" stroke-width="4"/>
-                <circle cx="50" cy="55" r="11" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="50" cy="105" r="11" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="160" cy="40" r="11" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="160" cy="80" r="11" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="160" cy="120" r="11" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="270" cy="80" r="11" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2.5"/>
-                <path d="M 90 22 Q 100 45 108 65" fill="none" stroke="#ff3c8e" stroke-width="2.5" marker-end="url(#arrow)"/>
-              </g>
-              <text x="90" y="15" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">a weight</text>
-              <text x="160" y="172" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13">× billions of these</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>A parameter is one number inside the model — a knob that gets turned during training. Modern LLMs have hundreds of billions of these.</p>
-            <p>Each parameter is essentially a weight on a connection between two artificial neurons. During training, the model nudges each weight up or down until its predictions get better. After training, those frozen weights ARE the model.</p>
-            <p>When you hear "Llama-3 70B" — the 70B is 70 billion parameters. Bigger usually means smarter (up to a point), but also slower and more expensive to run.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Context Window</h3>
-          <p class="hook">the model's working memory. blink and it forgets the start.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="10" y="60" width="300" height="56" rx="4" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <g stroke="#1a1a1a" stroke-width="1.5">
-                  <line x1="20" y1="78" x2="55" y2="78"/>
-                  <line x1="60" y1="78" x2="90" y2="78"/>
-                  <line x1="95" y1="78" x2="130" y2="78"/>
-                  <line x1="135" y1="78" x2="160" y2="78"/>
-                  <line x1="165" y1="78" x2="200" y2="78"/>
-                  <line x1="205" y1="78" x2="235" y2="78"/>
-                  <line x1="240" y1="78" x2="275" y2="78"/>
-                  <line x1="280" y1="78" x2="305" y2="78"/>
-                  <line x1="20" y1="96" x2="50" y2="96"/>
-                  <line x1="55" y1="96" x2="95" y2="96"/>
-                  <line x1="100" y1="96" x2="130" y2="96"/>
-                  <line x1="135" y1="96" x2="170" y2="96"/>
-                  <line x1="175" y1="96" x2="205" y2="96"/>
-                  <line x1="210" y1="96" x2="245" y2="96"/>
-                  <line x1="250" y1="96" x2="290" y2="96"/>
-                </g>
-                <rect x="85" y="42" width="160" height="88" rx="4" fill="none" stroke="#ff3c8e" stroke-width="3.5"/>
-              </g>
-              <text x="165" y="35" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="13">what the model sees</text>
-              <text x="35" y="148" font-family="'Space Grotesk', sans-serif" font-size="11">← clipped</text>
-              <text x="305" y="148" text-anchor="end" font-family="'Space Grotesk', sans-serif" font-size="11">clipped →</text>
-              <text x="165" y="170" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13">window slides as text grows</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>The context window is the model's working memory — the most text it can look at in one go. Older models had ~4k tokens (about 3000 words). New ones go up to a million or more.</p>
-            <p>Outside the window, the model is blind. If you paste in a huge document, only the slice that fits inside the window is actually "seen" by the model; the rest gets clipped.</p>
-            <p>Bigger windows are great for analyzing long docs, but they cost more (compute scales roughly quadratically with window size) and the model tends to get fuzzy on stuff in the middle of huge contexts.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Inference</h3>
-          <p class="hook">what happens after training. the model actually thinking for you.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="10" y="65" width="60" height="50" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="72" y1="90" x2="98" y2="90" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <rect x="100" y="40" width="120" height="100" rx="10" fill="#ffe24d" stroke="#1a1a1a" stroke-width="3"/>
-                <path d="M 152 60 Q 152 50 160 50 Q 168 50 168 60" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="148" y="60" width="24" height="18" rx="3" fill="#1a1a1a"/>
-                <line x1="222" y1="90" x2="248" y2="90" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <rect x="250" y="65" width="60" height="50" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-              </g>
-              <text x="40" y="96" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="20">?</text>
-              <text x="160" y="112" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18">FROZEN</text>
-              <text x="160" y="130" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">trained model</text>
-              <text x="280" y="96" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="20">!</text>
-              <text x="160" y="172" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13">no learning — just executing</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Inference is what happens when you actually USE a trained model — you give it input, it gives you output. Different from training, which is the months-long process of teaching the model in the first place.</p>
-            <p>Every time you send a message to Claude, a server somewhere is running inference: loading the frozen weights, doing a bunch of matrix multiplications, and producing your reply one token at a time.</p>
-            <p>Inference is cheaper than training per query, but at scale (billions of queries) it's where most of the AI industry's compute spend actually goes.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Multimodal</h3>
-          <p class="hook">it can see and hear and read. not just words anymore.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="20" y="20" width="50" height="36" rx="4" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="20" y="72" width="50" height="36" rx="4" fill="#3ddbd9" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="20" y="124" width="50" height="36" rx="4" fill="#ff3c8e" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="135" y="55" width="92" height="74" rx="10" fill="#ffe24d" stroke="#1a1a1a" stroke-width="3"/>
-                <line x1="72" y1="38" x2="135" y2="78" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <line x1="72" y1="90" x2="135" y2="92" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <line x1="72" y1="142" x2="135" y2="105" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <line x1="229" y1="92" x2="255" y2="92" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <rect x="257" y="67" width="55" height="50" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-              </g>
-              <text x="45" y="44" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="18">🖼</text>
-              <text x="45" y="96" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="18">🔊</text>
-              <text x="45" y="148" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">abc</text>
-              <text x="181" y="98" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="22">LLM</text>
-              <text x="285" y="98" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="13">text</text>
-              <text x="160" y="175" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13">image + sound + text → one brain</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>A multimodal model can handle more than just text. It can look at images, listen to audio, sometimes watch video — and respond to all of them.</p>
-            <p>Under the hood, it usually still works in tokens: an image gets chopped into "image tokens" and fed into the same architecture as text tokens. The model learns to mix and match.</p>
-            <p>This is why you can paste a screenshot to Claude or upload a photo to GPT and ask "what's wrong with this code?" — same model, just trained on more types of input.</p>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- HOW IT THINKS -->
-  <section class="terms thinks">
-    <div class="section-head">
-      <span class="num">02</span>
-      <h2>How It Thinks</h2>
-    </div>
-    <div class="grid">
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Transformer</h3>
-          <p class="hook">the architecture that runs basically every AI you've heard of.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <line x1="160" y1="170" x2="160" y2="148" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <rect x="80" y="120" width="160" height="22" rx="4" fill="#3ddbd9" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="80" y="92" width="160" height="22" rx="4" fill="#3ddbd9" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="80" y="64" width="160" height="22" rx="4" fill="#3ddbd9" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="80" y="36" width="160" height="22" rx="4" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="160" y1="34" x2="160" y2="15" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <path d="M 110 47 Q 130 28 160 47" fill="none" stroke="#1a1a1a" stroke-width="1.3" stroke-dasharray="3,2"/>
-                <path d="M 160 47 Q 190 28 210 47" fill="none" stroke="#1a1a1a" stroke-width="1.3" stroke-dasharray="3,2"/>
-              </g>
-              <text x="160" y="135" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">layer 1</text>
-              <text x="160" y="107" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">layer 2</text>
-              <text x="160" y="79" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">layer 3</text>
-              <text x="160" y="51" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">layer N + attention</text>
-              <text x="160" y="13" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10">output</text>
-              <text x="160" y="177" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10">input</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>The transformer is the architecture — the structural design — behind basically every modern AI model. ChatGPT, Claude, Llama, the image-generators, even most translation tools.</p>
-            <p>It was invented in 2017 in a paper titled "Attention Is All You Need." The key idea: instead of reading text one word at a time like older models, look at all the words at once and figure out which ones matter for which.</p>
-            <p>You can think of it as a stack of "thinking layers," each one re-reading the whole input and adding more understanding. Modern LLMs stack dozens to hundreds of these.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Attention</h3>
-          <p class="hook">how a model figures out which words to care about most.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="20" y="22" width="50" height="34" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="100" y="22" width="50" height="34" rx="6" fill="#ffe24d" stroke="#1a1a1a" stroke-width="3.5"/>
-                <rect x="180" y="22" width="50" height="34" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="260" y="22" width="50" height="34" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <ellipse cx="165" cy="148" rx="32" ry="22" fill="#3ddbd9" stroke="#1a1a1a" stroke-width="2.5"/>
-                <path d="M 148 130 Q 100 100 50 62" fill="none" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
-                <path d="M 158 126 Q 138 90 128 62" fill="none" stroke="#1a1a1a" stroke-width="5" marker-end="url(#arrow)"/>
-                <path d="M 175 126 Q 195 90 202 62" fill="none" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <path d="M 184 130 Q 230 100 284 62" fill="none" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
-              </g>
-              <text x="45" y="45" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="16">the</text>
-              <text x="125" y="45" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="16">cat</text>
-              <text x="205" y="45" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="16">sat</text>
-              <text x="285" y="45" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="16">mat</text>
-              <text x="165" y="156" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="20">it</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Attention is how a model decides which words in the input matter most for understanding each other word. For every word, the model computes a kind of weighted spotlight on all the other words.</p>
-            <p>When the model reads "the cat sat on the mat because it was tired," attention is what helps it figure out that "it" refers to "cat" and not "mat." That thick arrow from "it" → "cat" is just a much higher weight than the arrows pointing elsewhere.</p>
-            <p>Before attention, models had to compress everything into one fixed memory and read strictly left-to-right. Attention let them look back at any word at any time. The 2017 paper that introduced it was literally titled "Attention Is All You Need."</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Self-Attention</h3>
-          <p class="hook">every word in a sentence looking at every other word, deciding what matters.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="40" y="70" width="60" height="40" rx="6" fill="#3ddbd9" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="130" y="70" width="60" height="40" rx="6" fill="#3ddbd9" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="220" y="70" width="60" height="40" rx="6" fill="#3ddbd9" stroke="#1a1a1a" stroke-width="2.5"/>
-                <path d="M 100 80 Q 115 60 130 80" fill="none" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <path d="M 130 100 Q 115 120 100 100" fill="none" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <path d="M 190 80 Q 205 60 220 80" fill="none" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <path d="M 220 100 Q 205 120 190 100" fill="none" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <path d="M 100 90 Q 160 35 220 90" fill="none" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <path d="M 220 95 Q 160 145 100 95" fill="none" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-              </g>
-              <text x="70" y="96" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">the</text>
-              <text x="160" y="96" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">cat</text>
-              <text x="250" y="96" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">sat</text>
-              <text x="160" y="172" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">every word looks at every other word</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Self-attention is attention pointed at the same sentence — every word looks at every other word in the same chunk of text, including itself, and decides what to focus on.</p>
-            <p>It's "self" because it's not attention between two different things (like English and French in translation). It's a sentence inspecting itself to figure out internal relationships.</p>
-            <p>This is the workhorse of the transformer. Multiple layers of self-attention build up more and more abstract understanding: who refers to whom, what depends on what, what's the topic.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Temperature</h3>
-          <p class="hook">a creativity dial. low = boring &amp; safe. high = wild &amp; weird.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="30" y="78" width="260" height="24" rx="12" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="30" y="78" width="130" height="24" rx="12" fill="#3ddbd9" stroke="none"/>
-                <rect x="30" y="78" width="260" height="24" rx="12" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
-                <circle cx="160" cy="90" r="16" fill="#ff3c8e" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="60" y1="55" x2="60" y2="70" stroke="#1a1a1a" stroke-width="1.5"/>
-                <line x1="160" y1="55" x2="160" y2="70" stroke="#1a1a1a" stroke-width="1.5"/>
-                <line x1="260" y1="55" x2="260" y2="70" stroke="#1a1a1a" stroke-width="1.5"/>
-              </g>
-              <text x="60" y="48" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">0</text>
-              <text x="160" y="48" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">0.7</text>
-              <text x="260" y="48" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">2.0</text>
-              <text x="60" y="135" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">boring &amp; safe</text>
-              <text x="260" y="135" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">wild &amp; weird</text>
-              <text x="160" y="172" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13">how much randomness in word choice</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Temperature is a single knob that controls how "creative" or random the model's output is. Low = boring and safe; high = wild and weird.</p>
-            <p>Mechanically: at every step, the model has a list of possible next words with probabilities. Temperature controls how much it skews toward the top option vs spreading the love. Temp 0 = always pick the most likely word. Temp 1 = sample fairly. Temp 2+ = chaos.</p>
-            <p>For factual questions, lower is better. For brainstorming or creative writing, crank it up. Most chat interfaces hide this knob at around 0.7.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Top-p Sampling</h3>
-          <p class="hook">the model picks a word from the top slice of likely options.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <line x1="30" y1="135" x2="300" y2="135" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="40" y="50" width="32" height="85" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="80" y="68" width="32" height="67" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="120" y="85" width="32" height="50" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="160" y="105" width="32" height="30" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="200" y="115" width="32" height="20" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="240" y="122" width="32" height="13" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="36" y="42" width="120" height="98" fill="none" stroke="#ff3c8e" stroke-width="3.5"/>
-              </g>
-              <text x="55" y="160" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="11">cat</text>
-              <text x="95" y="160" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="11">dog</text>
-              <text x="135" y="160" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="11">fox</text>
-              <text x="175" y="160" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">owl</text>
-              <text x="215" y="160" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">elk</text>
-              <text x="255" y="160" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">...</text>
-              <text x="100" y="35" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">nucleus (top-p)</text>
-              <text x="285" y="35" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">prob ↑</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Top-p is another knob for output randomness. It says: "only pick from the smallest set of next-word options whose probabilities add up to p (e.g. 0.9)."</p>
-            <p>In practice this means the model considers all the likely options but ignores the long tail of weird, unlikely ones. With top-p = 0.9, it's choosing from maybe 5–20 candidates instead of all 50,000.</p>
-            <p>Works alongside temperature. Together they give you fine control over the trade-off between coherence and creativity.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Hallucination</h3>
-          <p class="hook">when the model confidently makes stuff up. happens a lot.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="30" y="35" width="50" height="50" rx="8" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2.5"/>
-                <circle cx="44" cy="55" r="3" fill="#1a1a1a"/>
-                <circle cx="66" cy="55" r="3" fill="#1a1a1a"/>
-                <path d="M 42 72 Q 55 78 68 72" fill="none" stroke="#1a1a1a" stroke-width="2"/>
-                <path d="M 90 60 Q 100 50 110 55 L 280 55 Q 290 55 290 65 L 290 110 Q 290 120 280 120 L 130 120 L 115 135 L 120 120 L 110 120 Q 100 120 100 110 Z" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="125" y1="105" x2="265" y2="105" stroke="#ff3c8e" stroke-width="3" stroke-linecap="round"/>
-              </g>
-              <text x="195" y="83" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">Author of Hamlet:</text>
-              <text x="195" y="103" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">John Lennon</text>
-              <text x="160" y="160" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13">confidently wrong</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>A hallucination is when an LLM says something that sounds confident and correct but is just… made up. A fake citation, a wrong fact, a function that doesn't exist.</p>
-            <p>It happens because the model is a probabilistic next-word predictor, not a database. If the patterns suggest a plausible-sounding answer, it'll generate one even when it has no real grounding for it.</p>
-            <p>This is why you should sanity-check anything important an AI tells you, and why techniques like RAG (letting the model look stuff up) exist — to give the model real facts to latch onto.</p>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- HOW IT LEARNS -->
-  <section class="terms learns">
-    <div class="section-head">
-      <span class="num">03</span>
-      <h2>How It Learns</h2>
-    </div>
-    <div class="grid">
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Pretraining</h3>
-          <p class="hook">feed it the internet. let it predict the next word, over and over.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="20" y="40" width="58" height="14" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="24" y="50" width="58" height="14" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="28" y="60" width="58" height="14" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="32" y="70" width="58" height="14" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="36" y="80" width="58" height="14" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2"/>
-                <line x1="98" y1="68" x2="125" y2="68" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <rect x="130" y="35" width="100" height="80" rx="10" fill="#ffe24d" stroke="#1a1a1a" stroke-width="3"/>
-                <line x1="234" y1="75" x2="262" y2="75" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <rect x="265" y="55" width="48" height="40" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <path d="M 235 95 Q 270 130 200 130 Q 130 130 175 100" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
-              </g>
-              <text x="50" y="20" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="11">internet</text>
-              <text x="180" y="80" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">predict</text>
-              <text x="180" y="98" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">next →</text>
-              <text x="289" y="80" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">?</text>
-              <text x="160" y="155" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">repeat billions of times → smart model</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Pretraining is the marathon training phase: feed the model an enormous pile of text — the public internet, books, code, Wikipedia — and have it predict the next token, over and over, billions of times.</p>
-            <p>That's the whole task during pretraining: "given these 4096 tokens, what's token 4097?" The model gets graded on each guess and slowly, painfully, its billions of parameters drift toward making good predictions.</p>
-            <p>This is where the model learns grammar, facts, reasoning patterns, code, languages — the bulk of what it knows. After pretraining you have a "base model" that can complete text but isn't a great chatbot yet.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Fine-tuning</h3>
-          <p class="hook">take a smart generalist, teach it your specific job.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="10" y="45" width="90" height="90" rx="10" fill="#ffe24d" stroke="#1a1a1a" stroke-width="3"/>
-                <line x1="103" y1="90" x2="128" y2="90" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <rect x="130" y="65" width="56" height="50" rx="4" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <line x1="138" y1="78" x2="178" y2="78" stroke="#1a1a1a" stroke-width="1.2"/>
-                <line x1="138" y1="88" x2="178" y2="88" stroke="#1a1a1a" stroke-width="1.2"/>
-                <line x1="138" y1="98" x2="170" y2="98" stroke="#1a1a1a" stroke-width="1.2"/>
-                <line x1="189" y1="90" x2="214" y2="90" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <rect x="216" y="45" width="90" height="90" rx="10" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="3"/>
-              </g>
-              <text x="55" y="86" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">generalist</text>
-              <text x="55" y="104" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">LLM</text>
-              <text x="158" y="135" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">small dataset</text>
-              <text x="261" y="86" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">code</text>
-              <text x="261" y="104" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">helper</text>
-              <text x="160" y="170" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">general knowledge → specialized behavior</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Fine-tuning is the second phase of training: take a pretrained model that knows the general world, then continue training it on a much smaller, more specific dataset.</p>
-            <p>This is how a generic LLM becomes a coding assistant, a medical-question-answerer, or a polite chat helper. The base knowledge stays; the behavior shifts.</p>
-            <p>The dataset for fine-tuning is tiny compared to pretraining — maybe thousands or millions of examples instead of trillions of tokens. But it has huge influence over how the model actually behaves.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">RLHF</h3>
-          <p class="hook">humans rank responses. the model learns to be more helpful.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="30" y="35" width="110" height="55" rx="10" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="30" y="100" width="110" height="55" rx="10" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="3"/>
-                <rect x="195" y="65" width="100" height="60" rx="8" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="143" y1="62" x2="190" y2="80" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <line x1="143" y1="128" x2="190" y2="110" stroke="#1a1a1a" stroke-width="3" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
-              </g>
-              <text x="85" y="60" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="13">Response A</text>
-              <text x="85" y="76" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">"idk look it up"</text>
-              <text x="85" y="125" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="13">Response B 👍</text>
-              <text x="85" y="141" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">"here's how..."</text>
-              <text x="245" y="92" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="15">model</text>
-              <text x="245" y="110" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">"do more B"</text>
-              <text x="160" y="174" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">humans pick winner → model learns</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>RLHF is how raw LLMs become genuinely helpful chatbots. Step one: humans look at pairs of model responses and pick the better one. Step two: train a "reward model" to predict which response humans would prefer. Step three: train the LLM to maximize that reward.</p>
-            <p>This is what teaches the model to be helpful, honest-ish, and harmless, instead of just completing patterns. Without RLHF, a base LLM might respond to "How do I bake bread?" with another question or a list of related Wikipedia entries.</p>
-            <p>It's expensive (humans are slow) but the resulting behavior change is enormous. RLHF is roughly what turned GPT-3 into ChatGPT.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Constitutional AI</h3>
-          <p class="hook">give the model a written set of principles to live by.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="170" y="40" width="120" height="100" rx="10" fill="#ffe24d" stroke="#1a1a1a" stroke-width="3"/>
-                <rect x="30" y="30" width="120" height="120" rx="4" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="42" y1="55" x2="138" y2="55" stroke="#1a1a1a" stroke-width="1.5"/>
-                <line x1="42" y1="72" x2="125" y2="72" stroke="#1a1a1a" stroke-width="1.5"/>
-                <line x1="42" y1="89" x2="138" y2="89" stroke="#1a1a1a" stroke-width="1.5"/>
-                <line x1="42" y1="106" x2="115" y2="106" stroke="#1a1a1a" stroke-width="1.5"/>
-                <line x1="42" y1="123" x2="138" y2="123" stroke="#1a1a1a" stroke-width="1.5"/>
-                <line x1="152" y1="90" x2="168" y2="90" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <path d="M 230 145 Q 230 165 215 165 Q 200 165 200 145" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
-              </g>
-              <text x="90" y="22" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="13">constitution</text>
-              <text x="230" y="86" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">model</text>
-              <text x="230" y="106" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">critiques itself</text>
-              <text x="160" y="180" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">written rules → self-improvement loop</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Constitutional AI is Anthropic's approach to alignment: instead of relying mostly on humans to rank responses, the model is given an explicit written set of principles — a "constitution" — and trained to critique and revise its own responses against those principles.</p>
-            <p>The constitution covers stuff like "be honest," "avoid harm," "respect autonomy." The model effectively learns to police itself based on these rules during training.</p>
-            <p>The advantage: it's faster than waiting for humans on everything, more transparent (the principles are written down), and scales better. Claude is trained this way.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Neural Network</h3>
-          <p class="hook">layers of fake neurons doing math. somehow this works.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <g stroke="#1a1a1a" stroke-width="1" opacity="0.7">
-                  <line x1="40" y1="50" x2="120" y2="40"/>
-                  <line x1="40" y1="50" x2="120" y2="90"/>
-                  <line x1="40" y1="50" x2="120" y2="140"/>
-                  <line x1="40" y1="90" x2="120" y2="40"/>
-                  <line x1="40" y1="90" x2="120" y2="90"/>
-                  <line x1="40" y1="90" x2="120" y2="140"/>
-                  <line x1="40" y1="130" x2="120" y2="40"/>
-                  <line x1="40" y1="130" x2="120" y2="90"/>
-                  <line x1="40" y1="130" x2="120" y2="140"/>
-                  <line x1="135" y1="40" x2="215" y2="60"/>
-                  <line x1="135" y1="40" x2="215" y2="120"/>
-                  <line x1="135" y1="90" x2="215" y2="60"/>
-                  <line x1="135" y1="90" x2="215" y2="120"/>
-                  <line x1="135" y1="140" x2="215" y2="60"/>
-                  <line x1="135" y1="140" x2="215" y2="120"/>
-                  <line x1="230" y1="60" x2="290" y2="90"/>
-                  <line x1="230" y1="120" x2="290" y2="90"/>
-                </g>
-                <circle cx="40" cy="50" r="10" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="40" cy="90" r="10" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="40" cy="130" r="10" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="125" cy="40" r="10" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="125" cy="90" r="10" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="125" cy="140" r="10" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="222" cy="60" r="10" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="222" cy="120" r="10" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="295" cy="90" r="10" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2.5"/>
-              </g>
-              <text x="40" y="175" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">input</text>
-              <text x="170" y="175" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">hidden layers</text>
-              <text x="295" y="175" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">output</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>A neural network is the basic computational structure under all modern AI: layers of simple "neurons" (just numbers) connected by weighted edges (more numbers).</p>
-            <p>Each neuron takes some inputs, multiplies them by weights, adds them up, runs the result through a simple non-linear function, and passes the output to the next layer. Stack enough of these and you can approximate ridiculously complex patterns.</p>
-            <p>"Deep learning" just means neural networks with many layers (dozens to hundreds). Transformers, CNNs, RNNs — they're all neural networks with different shapes of connections.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Gradient Descent</h3>
-          <p class="hook">rolling downhill toward 'less wrong'. that's how it learns.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <path d="M 25 35 Q 160 230 295 35" fill="none" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round"/>
-                <line x1="20" y1="155" x2="300" y2="155" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3,4" opacity="0.5"/>
-                <circle cx="55" cy="55" r="12" fill="#ff3c8e" stroke="#1a1a1a" stroke-width="2.5"/>
-                <path d="M 64 64 Q 90 95 112 116 Q 135 135 158 143" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
-              </g>
-              <text x="55" y="38" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13">start</text>
-              <text x="160" y="172" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="14">less wrong ↓</text>
-              <text x="280" y="35" text-anchor="end" font-family="'Space Grotesk', sans-serif" font-size="12">loss</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Gradient descent is how a neural network actually learns. Picture it as a ball rolling downhill on a "loss landscape" — the high points are where the model is very wrong; the valleys are where it's getting things right.</p>
-            <p>At each step: run an example through the model, see how wrong the answer is (the "loss"), then compute which way to nudge each parameter to make the loss a little smaller. Take that tiny step. Repeat billions of times.</p>
-            <p>It's painfully incremental, but with enough compute it works astoundingly well. Pretty much every neural net you've heard of was trained with some flavor of gradient descent.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Backpropagation</h3>
-          <p class="hook">the trick that lets a network figure out which knob to turn.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <g stroke="#1a1a1a" stroke-width="1" opacity="0.4">
-                  <line x1="40" y1="60" x2="120" y2="50"/>
-                  <line x1="40" y1="60" x2="120" y2="100"/>
-                  <line x1="40" y1="110" x2="120" y2="50"/>
-                  <line x1="40" y1="110" x2="120" y2="100"/>
-                  <line x1="135" y1="50" x2="215" y2="80"/>
-                  <line x1="135" y1="100" x2="215" y2="80"/>
-                  <line x1="230" y1="80" x2="290" y2="80"/>
-                </g>
-                <path d="M 280 95 Q 250 110 220 95" fill="none" stroke="#ff3c8e" stroke-width="3" marker-end="url(#arrow)"/>
-                <path d="M 215 95 Q 175 115 138 105" fill="none" stroke="#ff3c8e" stroke-width="3" marker-end="url(#arrow)"/>
-                <path d="M 120 110 Q 80 130 45 120" fill="none" stroke="#ff3c8e" stroke-width="3" marker-end="url(#arrow)"/>
-                <circle cx="40" cy="60" r="10" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="40" cy="110" r="10" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="125" cy="50" r="10" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="125" cy="100" r="10" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="222" cy="80" r="10" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="295" cy="80" r="11" fill="#ff3c8e" stroke="#1a1a1a" stroke-width="2.5"/>
-                <text x="295" y="84" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="13" fill="#fff">!</text>
-              </g>
-              <text x="295" y="50" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="11">wrong!</text>
-              <text x="160" y="158" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13">error flows backward, tunes every knob</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Backpropagation (or "backprop") is the math trick that makes gradient descent feasible. The problem: you need to know how every weight in a deep network affected the final error.</p>
-            <p>Backprop's clever idea: start at the output, compute how the last layer contributed to the error, then walk backward through the network using the chain rule from calculus. Each layer's contribution is computed from the next layer's.</p>
-            <p>It's the breakthrough that unlocked training large neural networks. Old hat by now, but still load-bearing.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Overfitting</h3>
-          <p class="hook">memorizing answers instead of actually learning. very bad.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <line x1="20" y1="135" x2="140" y2="135" stroke="#1a1a1a" stroke-width="1.5"/>
-                <line x1="20" y1="135" x2="20" y2="35" stroke="#1a1a1a" stroke-width="1.5"/>
-                <path d="M 25 115 Q 80 60 135 90" fill="none" stroke="#a4ff3c" stroke-width="3.5" stroke-linecap="round"/>
-                <circle cx="35" cy="110" r="3" fill="#1a1a1a"/>
-                <circle cx="55" cy="95" r="3" fill="#1a1a1a"/>
-                <circle cx="75" cy="80" r="3" fill="#1a1a1a"/>
-                <circle cx="95" cy="78" r="3" fill="#1a1a1a"/>
-                <circle cx="115" cy="92" r="3" fill="#1a1a1a"/>
-                <line x1="180" y1="135" x2="300" y2="135" stroke="#1a1a1a" stroke-width="1.5"/>
-                <line x1="180" y1="135" x2="180" y2="35" stroke="#1a1a1a" stroke-width="1.5"/>
-                <path d="M 195 110 L 215 95 L 220 110 L 235 80 L 240 95 L 255 78 L 260 92 L 275 75 L 280 92" fill="none" stroke="#ff3c8e" stroke-width="3" stroke-linecap="round"/>
-                <circle cx="195" cy="110" r="3" fill="#1a1a1a"/>
-                <circle cx="215" cy="95" r="3" fill="#1a1a1a"/>
-                <circle cx="235" cy="80" r="3" fill="#1a1a1a"/>
-                <circle cx="255" cy="78" r="3" fill="#1a1a1a"/>
-                <circle cx="275" cy="92" r="3" fill="#1a1a1a"/>
-              </g>
-              <text x="80" y="160" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">good fit</text>
-              <text x="80" y="175" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10">learned the pattern</text>
-              <text x="240" y="160" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">overfit</text>
-              <text x="240" y="175" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10">memorized the dots</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Overfitting is when a model memorizes its training data instead of actually learning the underlying patterns. It scores great on the data it has seen, fails badly on anything new.</p>
-            <p>Imagine teaching a kid math by only showing them the answers to ten specific problems. They might ace those ten and totally bomb a new question. That's overfitting.</p>
-            <p>The fix is usually some combination of: more training data, simpler model, "regularization" tricks that discourage memorization, and an honest test set the model never saw during training.</p>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- HOW WE USE IT -->
-  <section class="terms uses">
-    <div class="section-head">
-      <span class="num">04</span>
-      <h2>How We Use It</h2>
-    </div>
-    <div class="grid">
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Prompt Engineering</h3>
-          <p class="hook">the art of asking really well so the model gives you what you want.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="20" y="30" width="125" height="120" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="32" y1="62" x2="130" y2="62" stroke="#1a1a1a" stroke-width="1.5"/>
-                <line x1="32" y1="78" x2="130" y2="78" stroke="#1a1a1a" stroke-width="1.5"/>
-                <line x1="32" y1="94" x2="100" y2="94" stroke="#1a1a1a" stroke-width="1.5"/>
-                <text x="32" y="50" font-family="'Space Grotesk', sans-serif" font-size="11" font-weight="700">"summarize this"</text>
-                <line x1="148" y1="90" x2="172" y2="90" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <rect x="175" y="60" width="50" height="60" rx="6" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2"/>
-                <text x="200" y="95" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="13">meh</text>
-                <rect x="230" y="30" width="80" height="60" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <text x="270" y="50" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="9" font-weight="700">"3 bullets for</text>
-                <text x="270" y="62" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="9" font-weight="700">an exec, no fluff"</text>
-                <rect x="230" y="100" width="80" height="50" rx="6" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2.5"/>
-                <text x="270" y="130" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">🎯</text>
-                <line x1="270" y1="92" x2="270" y2="98" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-              </g>
-              <text x="160" y="174" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">specific input → great output</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Prompt engineering is the craft of writing inputs to an LLM that reliably get you the output you want. It sits somewhere between writing a brief, coaching a junior employee, and weird incantation magic.</p>
-            <p>Small wording changes can produce wildly different results. "Summarize this" vs "Summarize this in 3 bullet points for a busy executive" vs "Summarize this like you're explaining it to your grandma" — same model, very different vibes out.</p>
-            <p>It's less an engineering discipline than a writing one. The best prompt engineers are clear thinkers who can specify exactly what good output looks like.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Few-shot</h3>
-          <p class="hook">show the model 2–3 examples and it'll pattern-match the rest.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="20" y="20" width="180" height="30" rx="4" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="20" y="58" width="180" height="30" rx="4" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="20" y="96" width="180" height="30" rx="4" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2"/>
-                <rect x="20" y="134" width="180" height="32" rx="4" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="208" y1="150" x2="232" y2="150" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <rect x="235" y="130" width="65" height="40" rx="6" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2.5"/>
-              </g>
-              <text x="30" y="40" font-family="'Space Grotesk', sans-serif" font-size="11" font-weight="700">cat → 🐱</text>
-              <text x="30" y="78" font-family="'Space Grotesk', sans-serif" font-size="11" font-weight="700">dog → 🐶</text>
-              <text x="30" y="116" font-family="'Space Grotesk', sans-serif" font-size="11" font-weight="700">fox → 🦊</text>
-              <text x="30" y="156" font-family="'Space Grotesk', sans-serif" font-size="11" font-weight="700">owl → ?</text>
-              <text x="267" y="156" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18">🦉</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Few-shot prompting is when you give the model a handful of input/output examples in the prompt itself, before asking it to handle a new case. Like showing your work in a math test.</p>
-            <p>"Q: 4+5? A: 9. Q: 7+2? A: 9. Q: 8+3? A: ___" — the model picks up the pattern and continues. This works astonishingly well for tasks the model has never been explicitly trained on.</p>
-            <p>"Zero-shot" is no examples at all. "One-shot" is one. "Few-shot" usually means 2–10. Beyond that you're approaching fine-tuning territory.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Chain of Thought</h3>
-          <p class="hook">tell the model to think out loud. it suddenly gets way smarter.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="20" y="65" width="55" height="50" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="77" y1="90" x2="93" y2="90" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <rect x="95" y="65" width="55" height="50" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="152" y1="90" x2="168" y2="90" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <rect x="170" y="65" width="55" height="50" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="227" y1="90" x2="243" y2="90" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <rect x="245" y="55" width="60" height="70" rx="8" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="3"/>
-              </g>
-              <text x="47" y="86" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">step 1</text>
-              <text x="47" y="102" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10">"first..."</text>
-              <text x="122" y="86" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">step 2</text>
-              <text x="122" y="102" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10">"then..."</text>
-              <text x="197" y="86" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">step 3</text>
-              <text x="197" y="102" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10">"so..."</text>
-              <text x="275" y="88" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="13">answer</text>
-              <text x="275" y="104" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">🎯</text>
-              <text x="160" y="155" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13">"let's think step by step"</text>
-              <text x="160" y="175" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="11">show your work → better answer</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Chain of thought (CoT) is a prompting trick: tell the model to "think step by step" or "show your reasoning," and it'll produce its answer alongside the intermediate work. Crucially, this usually makes the answer better.</p>
-            <p>The mechanical reason: each token of output is also input for generating the next token. So writing out the steps gives the model more relevant context to compute the final answer from. It literally has more to "think with."</p>
-            <p>Modern reasoning models like o1 and Claude with extended thinking do an internal, often hidden version of this — they "think" before responding, and the visible answer is much sharper for it.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">RAG</h3>
-          <p class="hook">let the model look stuff up before answering. like an open-book test.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="6" y="60" width="42" height="54" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="50" y1="87" x2="66" y2="87" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <rect x="68" y="60" width="44" height="54" rx="6" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="114" y1="87" x2="130" y2="87" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <rect x="132" y="60" width="44" height="54" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="140" y1="75" x2="168" y2="75" stroke="#1a1a1a" stroke-width="1.2"/>
-                <line x1="140" y1="86" x2="168" y2="86" stroke="#1a1a1a" stroke-width="1.2"/>
-                <line x1="140" y1="97" x2="160" y2="97" stroke="#1a1a1a" stroke-width="1.2"/>
-                <line x1="178" y1="87" x2="194" y2="87" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <rect x="196" y="50" width="60" height="74" rx="8" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="258" y1="87" x2="274" y2="87" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <rect x="276" y="60" width="40" height="54" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-              </g>
-              <text x="27" y="96" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="26">?</text>
-              <text x="90" y="96" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="20">🔍</text>
-              <text x="226" y="96" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="22">LLM</text>
-              <text x="296" y="96" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="24">!</text>
-              <text x="27" y="135" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">ask</text>
-              <text x="90" y="135" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">search</text>
-              <text x="154" y="135" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">docs</text>
-              <text x="226" y="138" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">read + reply</text>
-              <text x="296" y="135" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">answer</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>RAG (Retrieval-Augmented Generation) is the architecture where, before the model answers, it first looks up relevant documents and stuffs them into the prompt. Like giving the model an open-book exam instead of relying purely on memory.</p>
-            <p>The flow: question in → embed it as a vector → search a vector database for similar documents → drop the top hits into the model's context → model answers using them. The user sees one fluid reply; under the hood, a tiny search engine ran first.</p>
-            <p>This is how AI products handle "what do our internal docs say about X" without retraining. It also dramatically reduces hallucination — the model has real facts to point at instead of guessing.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Vector Database</h3>
-          <p class="hook">where you store all those embedding-starfield points for fast lookup.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <circle cx="60" cy="50" r="4" fill="#1a1a1a"/>
-                <circle cx="95" cy="35" r="4" fill="#1a1a1a"/>
-                <circle cx="125" cy="60" r="4" fill="#1a1a1a"/>
-                <circle cx="170" cy="40" r="4" fill="#1a1a1a"/>
-                <circle cx="50" cy="95" r="4" fill="#1a1a1a"/>
-                <circle cx="85" cy="115" r="4" fill="#1a1a1a"/>
-                <circle cx="135" cy="100" r="4" fill="#1a1a1a"/>
-                <circle cx="175" cy="125" r="4" fill="#1a1a1a"/>
-                <circle cx="210" cy="105" r="4" fill="#1a1a1a"/>
-                <circle cx="220" cy="65" r="4" fill="#1a1a1a"/>
-                <circle cx="255" cy="80" r="4" fill="#1a1a1a"/>
-                <circle cx="155" cy="85" r="8" fill="#ff3c8e" stroke="#1a1a1a" stroke-width="2"/>
-                <circle cx="155" cy="85" r="40" fill="none" stroke="#ff3c8e" stroke-width="2" stroke-dasharray="3,3"/>
-                <path d="M 285 30 L 200 75" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-              </g>
-              <text x="285" y="22" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">query</text>
-              <text x="160" y="160" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="12">find the closest points = similar items</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>A vector database is a specialized store for embeddings. Instead of querying by keyword, you query by similarity: "find me the 10 vectors closest to this one."</p>
-            <p>Under the hood, it uses clever indexing (HNSW, IVF, etc.) to do approximate nearest-neighbor search fast — even across billions of vectors. Brute-force similarity would be way too slow at scale.</p>
-            <p>Vector DBs are the backbone of RAG and semantic search. Examples: Pinecone, Weaviate, Qdrant, pgvector. Pretty much every serious AI app has one.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Agent</h3>
-          <p class="hook">an LLM that takes actions in the world, not just spits out text.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="125" y="20" width="80" height="40" rx="8" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="220" y="78" width="80" height="40" rx="8" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="125" y="135" width="80" height="40" rx="8" fill="#3ddbd9" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="30" y="78" width="80" height="40" rx="8" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <path d="M 195 60 Q 235 65 240 78" fill="none" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <path d="M 240 118 Q 235 135 195 138" fill="none" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <path d="M 130 138 Q 85 130 85 118" fill="none" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <path d="M 85 78 Q 85 65 130 60" fill="none" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-              </g>
-              <text x="165" y="46" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">think</text>
-              <text x="260" y="104" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">act</text>
-              <text x="165" y="161" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14">observe</text>
-              <text x="70" y="104" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12">repeat</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>An agent is an LLM hooked up so it can take actions in the world — search the web, send emails, run code, click buttons, call APIs — not just produce text.</p>
-            <p>The typical loop: model thinks → picks a tool → tool runs → model sees the result → thinks again → picks the next tool. Repeat until the goal is met. The model is the brain; the tools are the hands.</p>
-            <p>The trick is keeping agents focused. Without guardrails they can spiral, repeat themselves, or get distracted. The good ones are simple loops with clear success criteria, not elaborate orchestration frameworks.</p>
-          </div>
-        </div>
-      </article>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Tool Use</h3>
-          <p class="hook">the model can call calculators, browse the web, run code.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="125" y="65" width="70" height="60" rx="10" fill="#ffe24d" stroke="#1a1a1a" stroke-width="3"/>
-                <rect x="15" y="20" width="58" height="40" rx="6" fill="#a4ff3c" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="15" y="130" width="58" height="40" rx="6" fill="#3ddbd9" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="250" y="20" width="58" height="40" rx="6" fill="#ff3c8e" stroke="#1a1a1a" stroke-width="2.5"/>
-                <rect x="250" y="130" width="58" height="40" rx="6" fill="#c89aff" stroke="#1a1a1a" stroke-width="2.5"/>
-                <line x1="73" y1="40" x2="125" y2="80" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <line x1="73" y1="150" x2="125" y2="115" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <line x1="195" y1="80" x2="247" y2="40" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-                <line x1="195" y1="115" x2="247" y2="150" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrow)"/>
-              </g>
-              <text x="44" y="46" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">🔢</text>
-              <text x="44" y="155" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">🌐</text>
-              <text x="160" y="100" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">LLM</text>
-              <text x="279" y="46" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">💻</text>
-              <text x="279" y="155" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16">📊</text>
-              <text x="44" y="78" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10">calc</text>
-              <text x="44" y="125" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10">web</text>
-              <text x="279" y="78" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10">code</text>
-              <text x="279" y="125" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="10">db</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Tool use (also called "function calling") is the mechanism that lets a chat model break out of "just talking" and do things — call a calculator, fetch a URL, query a database, run some code.</p>
-            <p>You tell the model in the prompt: "Here are these tools you can call, and here's what each one does." When the model wants to use one, it outputs a structured call instead of regular text. Your code runs the tool, and the result goes back into the conversation.</p>
-            <p>This is the building block for agents. Without tool use, models are stuck in their training-time snapshot of the world. With it, they can act on live data and real systems.</p>
-          </div>
-        </div>
-      </article>
-      <a class="card" href="https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener">
-        <h3 class="term">MCP</h3>
-        <p class="hook">a universal plug for hooking AI assistants up to your apps and data.</p>
-        <span class="arrow">eli5 ↗</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- KEEPING IT SAFE -->
-  <section class="terms safe">
-    <div class="section-head">
-      <span class="num">05</span>
-      <h2>Keeping It Safe</h2>
-    </div>
-    <div class="grid">
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Alignment</h3>
-          <p class="hook">making sure the AI actually wants what you want it to want.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <line x1="34" y1="50" x2="122" y2="50" stroke="#1a1a1a" stroke-width="3" marker-end="url(#arrow)"/>
-                <line x1="34" y1="80" x2="122" y2="80" stroke="#1a1a1a" stroke-width="3" marker-end="url(#arrow)"/>
-                <path d="M 50 130 L 72 150 L 118 105" fill="none" stroke="#a4ff3c" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-                <line x1="200" y1="50" x2="290" y2="50" stroke="#1a1a1a" stroke-width="3" marker-end="url(#arrow)"/>
-                <line x1="200" y1="115" x2="285" y2="80" stroke="#1a1a1a" stroke-width="3" marker-end="url(#arrow)"/>
-                <path d="M 218 145 L 258 105 M 218 105 L 258 145" fill="none" stroke="#ff3c8e" stroke-width="6" stroke-linecap="round"/>
-              </g>
-              <text x="14" y="55" font-family="'Space Grotesk', sans-serif" font-size="13">you</text>
-              <text x="14" y="85" font-family="'Space Grotesk', sans-serif" font-size="13">AI</text>
-              <text x="180" y="55" font-family="'Space Grotesk', sans-serif" font-size="13">you</text>
-              <text x="180" y="118" font-family="'Space Grotesk', sans-serif" font-size="13">AI</text>
-              <text x="80" y="172" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="14">aligned</text>
-              <text x="240" y="172" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="14">misaligned</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>Alignment is the field/problem of making sure AI systems do what humans actually want — both the literal request AND the deeper intent behind it. The dream is two arrows pointing the same direction; the worry is when they don't.</p>
-            <p>It's harder than it sounds. Models often learn to maximize the literal reward signal in ways that technically score high but miss the point (called "specification gaming"). And as models get more capable, the gap between "follow instructions" and "do what's actually good" matters more.</p>
-            <p>RLHF, Constitutional AI, interpretability research, and red teaming are all chunks of the alignment puzzle. There's no solved version; it's an open research problem at every frontier lab.</p>
-          </div>
-        </div>
-      </article>
-      <a class="card" href="https://learnprompting.org/docs/prompt_hacking/jailbreaking" target="_blank" rel="noopener">
-        <h3 class="term">Jailbreak</h3>
-        <p class="hook">tricking a model into bypassing its safety rules.</p>
-        <span class="arrow">eli5 ↗</span>
-      </a>
-      <a class="card" href="https://huggingface.co/blog/red-teaming" target="_blank" rel="noopener">
-        <h3 class="term">Red Teaming</h3>
-        <p class="hook">professionally trying to break the AI before bad actors do.</p>
-        <span class="arrow">eli5 ↗</span>
-      </a>
-      <a class="card" href="https://www.anthropic.com/research/mapping-mind-language-model" target="_blank" rel="noopener">
-        <h3 class="term">Interpretability</h3>
-        <p class="hook">cracking open the black box. figuring out what neurons are doing.</p>
-        <span class="arrow">eli5 ↗</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- UNDER THE HOOD -->
-  <section class="terms hood">
-    <div class="section-head">
-      <span class="num">06</span>
-      <h2>Under The Hood</h2>
-    </div>
-    <div class="grid">
-      <a class="card" href="https://en.wikipedia.org/wiki/Generative_pre-trained_transformer" target="_blank" rel="noopener">
-        <h3 class="term">GPT</h3>
-        <p class="hook">the family of models from OpenAI. 'generative pre-trained transformer'.</p>
-        <span class="arrow">eli5 ↗</span>
-      </a>
-      <a class="card" href="https://www.anthropic.com/claude" target="_blank" rel="noopener">
-        <h3 class="term">Claude</h3>
-        <p class="hook">Anthropic's model family. you're talking to one right now (hi!).</p>
-        <span class="arrow">eli5 ↗</span>
-      </a>
-      <a class="card" href="https://en.wikipedia.org/wiki/Llama_(language_model)" target="_blank" rel="noopener">
-        <h3 class="term">Llama</h3>
-        <p class="hook">Meta's open-weight LLM family. you can run it on your laptop.</p>
-        <span class="arrow">eli5 ↗</span>
-      </a>
-      <article class="card">
-        <button class="card-head" type="button" aria-expanded="false">
-          <h3 class="term">Diffusion Model</h3>
-          <p class="hook">how AI makes images. starts with noise, sculpts out a picture.</p>
-          <span class="arrow">read ↓</span>
-        </button>
-        <div class="note" hidden>
-          <div class="diagram-wrap">
-            <svg class="diagram" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-              <g filter="url(#wobble)">
-                <rect x="10" y="35" width="80" height="80" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <circle cx="22" cy="50" r="2" fill="#1a1a1a"/>
-                <circle cx="42" cy="46" r="2" fill="#1a1a1a"/>
-                <circle cx="64" cy="55" r="2" fill="#1a1a1a"/>
-                <circle cx="78" cy="48" r="2" fill="#1a1a1a"/>
-                <circle cx="18" cy="68" r="2" fill="#1a1a1a"/>
-                <circle cx="48" cy="74" r="2" fill="#1a1a1a"/>
-                <circle cx="72" cy="70" r="2" fill="#1a1a1a"/>
-                <circle cx="28" cy="88" r="2" fill="#1a1a1a"/>
-                <circle cx="56" cy="94" r="2" fill="#1a1a1a"/>
-                <circle cx="78" cy="100" r="2" fill="#1a1a1a"/>
-                <circle cx="36" cy="106" r="2" fill="#1a1a1a"/>
-                <circle cx="62" cy="80" r="2" fill="#1a1a1a"/>
-                <circle cx="14" cy="100" r="2" fill="#1a1a1a"/>
-                <line x1="92" y1="75" x2="118" y2="75" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <rect x="120" y="35" width="80" height="80" rx="6" fill="#fef9e7" stroke="#1a1a1a" stroke-width="2.5"/>
-                <circle cx="160" cy="75" r="26" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-dasharray="3,2"/>
-                <circle cx="152" cy="70" r="2" fill="#1a1a1a"/>
-                <circle cx="168" cy="70" r="2" fill="#1a1a1a"/>
-                <circle cx="134" cy="52" r="1.5" fill="#1a1a1a"/>
-                <circle cx="184" cy="52" r="1.5" fill="#1a1a1a"/>
-                <circle cx="140" cy="104" r="1.5" fill="#1a1a1a"/>
-                <line x1="202" y1="75" x2="228" y2="75" stroke="#1a1a1a" stroke-width="2.5" marker-end="url(#arrow)"/>
-                <rect x="230" y="35" width="80" height="80" rx="6" fill="#ffe24d" stroke="#1a1a1a" stroke-width="2.5"/>
-                <circle cx="270" cy="75" r="26" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
-                <circle cx="262" cy="70" r="2.5" fill="#1a1a1a"/>
-                <circle cx="278" cy="70" r="2.5" fill="#1a1a1a"/>
-                <path d="M 258 84 Q 270 94 282 84" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linecap="round"/>
-              </g>
-              <text x="50" y="135" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="14">noise</text>
-              <text x="160" y="135" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="14">forming</text>
-              <text x="270" y="135" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="14">image</text>
-              <text x="160" y="165" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="13">many denoising steps →</text>
-            </svg>
-          </div>
-          <div class="text-wrap">
-            <p>A diffusion model is the architecture behind most modern AI image generators — Stable Diffusion, Midjourney, DALL-E, Flux. A different beast from a language model entirely.</p>
-            <p>The trick: train a model to take a slightly noisy image and produce a slightly less noisy one. Apply this learned denoising step many times, starting from pure random noise, and you sculpt out a coherent picture — like a sculptor chipping away at a block until the figure emerges.</p>
-            <p>For text-to-image, each denoising step is biased by your prompt, so the picture that emerges matches the description. The same idea now powers video and even some audio generation.</p>
-          </div>
-        </div>
-      </article>
-      <a class="card" href="https://blogs.nvidia.com/blog/whats-the-difference-between-a-cpu-and-a-gpu/" target="_blank" rel="noopener">
-        <h3 class="term">GPU</h3>
-        <p class="hook">the chip that does the massive parallel math AI needs.</p>
-        <span class="arrow">eli5 ↗</span>
-      </a>
-      <a class="card" href="https://huggingface.co/docs/optimum/concept_guides/quantization" target="_blank" rel="noopener">
-        <h3 class="term">Quantization</h3>
-        <p class="hook">shrinking a model so it fits on smaller machines. fewer decimal places.</p>
-        <span class="arrow">eli5 ↗</span>
-      </a>
-      <a class="card" href="https://www.ibm.com/think/topics/knowledge-distillation" target="_blank" rel="noopener">
-        <h3 class="term">Distillation</h3>
-        <p class="hook">training a small model to mimic a big one. lighter, almost as smart.</p>
-        <span class="arrow">eli5 ↗</span>
-      </a>
-      <a class="card" href="https://huggingface.co/docs/peft/main/en/conceptual_guides/lora" target="_blank" rel="noopener">
-        <h3 class="term">LoRA</h3>
-        <p class="hook">fine-tune a model without touching the giant original. tiny add-on weights.</p>
-        <span class="arrow">eli5 ↗</span>
-      </a>
-      <a class="card" href="https://huggingface.co/blog/moe" target="_blank" rel="noopener">
-        <h3 class="term">Mixture of Experts</h3>
-        <p class="hook">many small expert models inside one big one. only the relevant ones fire.</p>
-        <span class="arrow">eli5 ↗</span>
-      </a>
-    </div>
-  </section>
+  <div id="sections-root"></div>
 
   <footer>
     <span class="stamp">made with love</span>
@@ -1628,57 +442,146 @@
 
 </div>
 
+<!-- term data — one file per term, in section order -->
+<script>window.TERMS = [];</script>
+<!-- basics -->
+<script src="terms/llm.js"></script>
+<script src="terms/token.js"></script>
+<script src="terms/embedding.js"></script>
+<script src="terms/parameter.js"></script>
+<script src="terms/context-window.js"></script>
+<script src="terms/inference.js"></script>
+<script src="terms/multimodal.js"></script>
+<!-- thinking -->
+<script src="terms/transformer.js"></script>
+<script src="terms/attention.js"></script>
+<script src="terms/self-attention.js"></script>
+<script src="terms/temperature.js"></script>
+<script src="terms/top-p-sampling.js"></script>
+<script src="terms/hallucination.js"></script>
+<!-- learning -->
+<script src="terms/pretraining.js"></script>
+<script src="terms/fine-tuning.js"></script>
+<script src="terms/rlhf.js"></script>
+<script src="terms/constitutional-ai.js"></script>
+<script src="terms/neural-network.js"></script>
+<script src="terms/gradient-descent.js"></script>
+<script src="terms/backpropagation.js"></script>
+<script src="terms/overfitting.js"></script>
+<!-- using -->
+<script src="terms/prompt-engineering.js"></script>
+<script src="terms/few-shot.js"></script>
+<script src="terms/chain-of-thought.js"></script>
+<script src="terms/rag.js"></script>
+<script src="terms/vector-database.js"></script>
+<script src="terms/agent.js"></script>
+<script src="terms/tool-use.js"></script>
+<script src="terms/mcp.js"></script>
+<!-- safety -->
+<script src="terms/alignment.js"></script>
+<script src="terms/jailbreak.js"></script>
+<script src="terms/red-teaming.js"></script>
+<script src="terms/interpretability.js"></script>
+<!-- hood -->
+<script src="terms/gpt.js"></script>
+<script src="terms/claude.js"></script>
+<script src="terms/llama.js"></script>
+<script src="terms/diffusion-model.js"></script>
+<script src="terms/gpu.js"></script>
+<script src="terms/quantization.js"></script>
+<script src="terms/distillation.js"></script>
+<script src="terms/lora.js"></script>
+<script src="terms/mixture-of-experts.js"></script>
+
 <script>
-  const input = document.getElementById('search');
-  const cards = document.querySelectorAll('.card');
-  const sections = document.querySelectorAll('section.terms');
-  const empty = document.getElementById('empty');
-  const counter = document.getElementById('count');
+const SECTIONS = [
+  { id: 'basics',   cls: 'basics', num: '01', label: 'The Basics' },
+  { id: 'thinking', cls: 'thinks', num: '02', label: 'How It Thinks' },
+  { id: 'learning', cls: 'learns', num: '03', label: 'How It Learns' },
+  { id: 'using',    cls: 'uses',   num: '04', label: 'How We Use It' },
+  { id: 'safety',   cls: 'safe',   num: '05', label: 'Keeping It Safe' },
+  { id: 'hood',     cls: 'hood',   num: '06', label: 'Under The Hood' },
+];
 
-  counter.textContent = cards.length;
-
-  input.addEventListener('input', () => {
-    const q = input.value.toLowerCase().trim();
-    let visible = 0;
-    cards.forEach(c => {
-      const text = c.textContent.toLowerCase();
-      const show = !q || text.includes(q);
-      c.style.display = show ? '' : 'none';
-      if (show) visible++;
-    });
-    sections.forEach(s => {
-      const any = [...s.querySelectorAll('.card')].some(c => c.style.display !== 'none');
-      s.style.display = any ? '' : 'none';
-    });
-    empty.style.display = visible === 0 ? 'block' : 'none';
-    counter.textContent = visible;
+function buildCard(t) {
+  const art = document.createElement('article');
+  art.className = 'card';
+  art.innerHTML = `
+    <button class="card-head" type="button" aria-expanded="false">
+      <h3 class="term">${t.term}</h3>
+      <p class="hook">${t.hook}</p>
+      <span class="arrow">read ↓</span>
+    </button>
+    <div class="note" hidden>
+      <div class="diagram-wrap">${t.diagram}</div>
+      <div class="text-wrap">${t.note}</div>
+    </div>
+  `;
+  const btn = art.querySelector('.card-head');
+  const note = art.querySelector('.note');
+  const arrow = art.querySelector('.arrow');
+  btn.addEventListener('click', () => {
+    const open = art.dataset.open === 'true';
+    art.dataset.open = open ? 'false' : 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    note.hidden = open;
+    arrow.textContent = open ? 'read ↓' : 'close ↑';
   });
+  return art;
+}
 
-  document.getElementById('surprise').addEventListener('click', (e) => {
-    e.preventDefault();
-    const visible = [...cards].filter(c => c.style.display !== 'none');
-    if (!visible.length) return;
-    const pick = visible[Math.floor(Math.random() * visible.length)];
-    pick.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    if (pick.tagName === 'ARTICLE' && pick.dataset.open !== 'true') {
-      const head = pick.querySelector('.card-head');
-      if (head) head.click();
-    }
-  });
+const root = document.getElementById('sections-root');
+SECTIONS.forEach(sec => {
+  const terms = TERMS.filter(t => t.section === sec.id);
+  if (!terms.length) return;
+  const section = document.createElement('section');
+  section.className = `terms ${sec.cls}`;
+  section.innerHTML = `
+    <div class="section-head">
+      <span class="num">${sec.num}</span>
+      <h2>${sec.label}</h2>
+    </div>
+    <div class="grid"></div>
+  `;
+  terms.forEach(t => section.querySelector('.grid').appendChild(buildCard(t)));
+  root.appendChild(section);
+});
 
-  // Expandable card toggles
-  document.querySelectorAll('article.card .card-head').forEach(btn => {
-    const card = btn.closest('article.card');
-    const note = card.querySelector('.note');
-    const arrow = btn.querySelector('.arrow');
-    btn.addEventListener('click', () => {
-      const open = card.dataset.open === 'true';
-      card.dataset.open = open ? 'false' : 'true';
-      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
-      if (note) note.hidden = open;
-      if (arrow) arrow.textContent = open ? 'read ↓' : 'close ↑';
-    });
+// search + counter + surprise
+const input = document.getElementById('search');
+const empty = document.getElementById('empty');
+const counter = document.getElementById('count');
+const allCards = () => document.querySelectorAll('.card');
+const allSections = () => document.querySelectorAll('section.terms');
+
+counter.textContent = TERMS.length;
+
+input.addEventListener('input', () => {
+  const q = input.value.toLowerCase().trim();
+  let visible = 0;
+  allCards().forEach(c => {
+    const show = !q || c.textContent.toLowerCase().includes(q);
+    c.style.display = show ? '' : 'none';
+    if (show) visible++;
   });
+  allSections().forEach(s => {
+    const any = [...s.querySelectorAll('.card')].some(c => c.style.display !== 'none');
+    s.style.display = any ? '' : 'none';
+  });
+  empty.style.display = visible === 0 ? 'block' : 'none';
+  counter.textContent = visible;
+});
+
+document.getElementById('surprise').addEventListener('click', e => {
+  e.preventDefault();
+  const visible = [...allCards()].filter(c => c.style.display !== 'none');
+  if (!visible.length) return;
+  const pick = visible[Math.floor(Math.random() * visible.length)];
+  pick.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  if (pick.tagName === 'ARTICLE' && pick.dataset.open !== 'true') {
+    pick.querySelector('.card-head')?.click();
+  }
+});
 </script>
 </body>
 </html>
