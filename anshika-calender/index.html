@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Anshika's Internship</title>
+  <style>
+    :root {
+      --pink-bg:      #fff0f6;
+      --pink-light:   #fce4ec;
+      --pink-mid:     #f48fb1;
+      --pink-primary: #e91e63;
+      --pink-dark:    #880e4f;
+      --pink-past:    #f8bbd9;
+      --white:        #ffffff;
+      --text-dark:    #3d0020;
+      --text-mid:     #6a1039;
+      --text-light:   #b0506a;
+      --shadow:       rgba(233,30,99,0.15);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--pink-bg);
+      color: var(--text-dark);
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--pink-primary);
+      color: white;
+      padding: 18px 20px 14px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 12px var(--shadow);
+    }
+    .header h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.4px; }
+    .header .subtitle { font-size: 0.75rem; opacity: 0.82; margin-top: 2px; }
+
+    /* ── Views ── */
+    .content { flex: 1; overflow-y: auto; padding-bottom: 80px; }
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ══════════════════════════════
+       TODAY VIEW
+    ══════════════════════════════ */
+    .today-view { padding: 22px 18px; }
+
+    .day-hero {
+      background: white;
+      border-radius: 22px;
+      padding: 26px 22px 22px;
+      text-align: center;
+      box-shadow: 0 4px 20px var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    .day-number {
+      font-size: 4rem;
+      font-weight: 800;
+      color: var(--pink-primary);
+      line-height: 1;
+    }
+    .day-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+    .day-date {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-top: 12px;
+    }
+    .days-remaining {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      margin-top: 5px;
+    }
+    .days-remaining strong {
+      color: var(--pink-primary);
+    }
+
+    .progress-section { margin-top: 18px; }
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-light);
+      margin-bottom: 7px;
+    }
+    .progress-bar-bg {
+      background: var(--pink-light);
+      border-radius: 999px;
+      height: 10px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      background: linear-gradient(90deg, var(--pink-mid), var(--pink-primary));
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.8s ease;
+      min-width: 4px;
+    }
+
+    /* Log card */
+    .log-card {
+      background: white;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--pink-dark);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 17px;
+      background: var(--pink-primary);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .log-textarea {
+      width: 100%;
+      min-height: 180px;
+      border: 1.5px solid var(--pink-light);
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--text-dark);
+      background: var(--pink-bg);
+      resize: vertical;
+      outline: none;
+      line-height: 1.65;
+      transition: border-color 0.2s;
+    }
+    .log-textarea:focus { border-color: var(--pink-mid); }
+    .log-textarea::placeholder { color: var(--text-light); opacity: 0.75; }
+
+    .save-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+    }
+    .save-status { font-size: 0.78rem; color: var(--text-light); }
+    .save-status.saved { color: #4caf50; }
+
+    .btn-save {
+      background: var(--pink-primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 11px 26px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s, background 0.15s;
+    }
+    .btn-save:active { transform: scale(0.96); background: var(--pink-dark); }
+
+    /* Backup row */
+    .backup-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .btn-backup {
+      flex: 1;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid var(--pink-mid);
+      background: white;
+      color: var(--pink-dark);
+      transition: background 0.15s;
+    }
+    .btn-backup:active { background: var(--pink-light); }
+    #import-input { display: none; }
+
+    /* ══════════════════════════════
+       ALL DAYS VIEW
+    ══════════════════════════════ */
+    .all-days-view { padding: 14px 14px 20px; }
+
+    .month-section { margin-bottom: 22px; }
+    .month-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--pink-dark);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      padding-left: 2px;
+    }
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+    }
+
+    .day-tile {
+      aspect-ratio: 1;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      position: relative;
+      transition: transform 0.1s;
+      padding: 2px;
+    }
+    .day-tile:active { transform: scale(0.9); }
+
+    .day-tile.today {
+      background: var(--pink-primary);
+      box-shadow: 0 2px 10px var(--shadow);
+    }
+    .day-tile.past  { background: var(--pink-past); }
+    .day-tile.future {
+      background: var(--pink-light);
+      border-color: var(--pink-mid);
+    }
+
+    .tile-day-num {
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--pink-dark);
+      line-height: 1;
+    }
+    .day-tile.today .tile-day-num { color: white; }
+
+    .tile-date {
+      font-size: 0.5rem;
+      color: var(--text-light);
+      line-height: 1;
+      margin-top: 2px;
+    }
+    .day-tile.today .tile-date { color: rgba(255,255,255,0.85); }
+
+    .log-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--pink-primary);
+      position: absolute;
+      bottom: 3px;
+    }
+    .day-tile.today .log-dot { background: white; }
+
+    /* ══════════════════════════════
+       BOTTOM SHEET MODAL
+    ══════════════════════════════ */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(136,14,79,0.28);
+      z-index: 100;
+      backdrop-filter: blur(2px);
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .bottom-sheet {
+      background: white;
+      border-radius: 24px 24px 0 0;
+      width: 100%;
+      max-width: 480px;
+      padding: 18px 22px 36px;
+      box-shadow: 0 -8px 30px var(--shadow);
+      animation: slideUp 0.25s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+
+    .sheet-handle {
+      width: 40px; height: 4px;
+      background: var(--pink-light);
+      border-radius: 2px;
+      margin: 0 auto 18px;
+    }
+    .sheet-day-num {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--pink-primary);
+      line-height: 1;
+    }
+    .sheet-meta {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      margin-top: 4px;
+      margin-bottom: 14px;
+    }
+
+    .sheet-textarea {
+      width: 100%;
+      min-height: 140px;
+      border: 1.5px solid var(--pink-light);
+      border-radius: 12px;
+      padding: 13px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--text-dark);
+      background: var(--pink-bg);
+      resize: none;
+      outline: none;
+      line-height: 1.6;
+      transition: border-color 0.2s;
+    }
+    .sheet-textarea:focus { border-color: var(--pink-mid); }
+
+    .sheet-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .btn-cancel {
+      flex: 1;
+      padding: 13px;
+      border-radius: 12px;
+      border: 1.5px solid var(--pink-mid);
+      background: white;
+      color: var(--pink-dark);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-sheet-save {
+      flex: 2;
+      padding: 13px;
+      border-radius: 12px;
+      border: none;
+      background: var(--pink-primary);
+      color: white;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-sheet-save:active { background: var(--pink-dark); }
+
+    /* ── Bottom Nav ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      max-width: 480px;
+      margin: 0 auto;
+      background: white;
+      border-top: 1.5px solid var(--pink-light);
+      display: flex;
+      z-index: 50;
+      box-shadow: 0 -4px 20px var(--shadow);
+    }
+    .nav-btn {
+      flex: 1;
+      padding: 12px 0 16px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: var(--text-light);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      transition: color 0.2s;
+    }
+    .nav-btn.active { color: var(--pink-primary); }
+    .nav-icon { font-size: 1.35rem; line-height: 1; }
+
+    /* outside internship range */
+    .out-of-range {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--text-light);
+    }
+    .out-of-range .big-emoji { font-size: 3rem; margin-bottom: 12px; }
+    .out-of-range h2 { font-size: 1.2rem; color: var(--pink-dark); margin-bottom: 8px; }
+    .out-of-range p  { font-size: 0.9rem; line-height: 1.5; }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <header class="header">
+    <h1>Anshika's Internship</h1>
+    <div class="subtitle">22 May → 19 Nov 2026 &nbsp;·&nbsp; 182 days</div>
+  </header>
+
+  <main class="content">
+
+    <!-- TODAY VIEW -->
+    <div class="view today-view active" id="view-today"></div>
+
+    <!-- ALL DAYS VIEW -->
+    <div class="view all-days-view" id="view-all"></div>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" id="nav-today" onclick="switchView('today')">
+      <span class="nav-icon">🌸</span>Today
+    </button>
+    <button class="nav-btn" id="nav-all" onclick="switchView('all')">
+      <span class="nav-icon">📅</span>All Days
+    </button>
+  </nav>
+</div>
+
+<!-- Bottom Sheet Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="bottom-sheet" id="bottom-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-day-num" id="sheet-day-num"></div>
+    <div class="sheet-meta"  id="sheet-meta"></div>
+    <textarea class="sheet-textarea" id="sheet-textarea" placeholder="Write your log for this day..."></textarea>
+    <div class="sheet-actions">
+      <button class="btn-cancel"     onclick="closeModal()">Cancel</button>
+      <button class="btn-sheet-save" onclick="saveSheetLog()">Save Log</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="import-input" accept=".json" onchange="importData(this)">
+
+<script>
+// ────────────────────────────────────────────────────────
+// Constants
+// ────────────────────────────────────────────────────────
+const START_STR  = '2026-05-22';
+const START_DATE = new Date(START_STR + 'T00:00:00');
+const TOTAL      = 182;
+const STORAGE_KEY = 'anshika_internship_v1';
+
+// ────────────────────────────────────────────────────────
+// Storage helpers
+// ────────────────────────────────────────────────────────
+function loadLogs() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+  catch { return {}; }
+}
+
+function persistLogs(logs) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(logs));
+}
+
+function saveLog(dateStr, text) {
+  const logs = loadLogs();
+  if (text.trim() === '') { delete logs[dateStr]; }
+  else { logs[dateStr] = text; }
+  persistLogs(logs);
+}
+
+function getLog(dateStr) { return loadLogs()[dateStr] || ''; }
+
+// ────────────────────────────────────────────────────────
+// Date helpers
+// ────────────────────────────────────────────────────────
+function toDateStr(d) {
+  return d.getFullYear() + '-'
+    + String(d.getMonth()+1).padStart(2,'0') + '-'
+    + String(d.getDate()).padStart(2,'0');
+}
+
+function getDayNumber(d) {
+  const base = new Date(START_DATE); base.setHours(0,0,0,0);
+  const day  = new Date(d);          day.setHours(0,0,0,0);
+  const diff = Math.round((day - base) / 86400000);
+  if (diff < 0 || diff >= TOTAL) return null;
+  return diff + 1;
+}
+
+function addDays(base, n) {
+  const d = new Date(base); d.setDate(d.getDate() + n); return d;
+}
+
+function fmtLong(d) {
+  return d.toLocaleDateString('en-GB', {
+    weekday:'long', day:'numeric', month:'long', year:'numeric'
+  });
+}
+
+function fmtShort(d) {
+  return d.toLocaleDateString('en-GB', { day:'numeric', month:'short' });
+}
+
+// ────────────────────────────────────────────────────────
+// Render: Today view
+// ────────────────────────────────────────────────────────
+function renderToday() {
+  const container = document.getElementById('view-today');
+  const today     = new Date();
+  const todayStr  = toDateStr(today);
+  const dayNum    = getDayNumber(today);
+
+  // Before or after internship
+  if (dayNum === null) {
+    const before = today < START_DATE;
+    container.innerHTML = `
+      <div class="out-of-range">
+        <div class="big-emoji">${before ? '🌱' : '🎉'}</div>
+        <h2>${before ? 'Starting soon!' : 'Internship Complete!'}</h2>
+        <p>${before
+          ? 'Your internship begins on 22 May 2026. Check back then!'
+          : 'All 182 days done. What a journey!'}</p>
+      </div>`;
+    return;
+  }
+
+  const remaining = TOTAL - dayNum;
+  const pct       = ((dayNum / TOTAL) * 100).toFixed(1);
+  const log       = getLog(todayStr);
+
+  container.innerHTML = `
+    <div class="day-hero">
+      <div class="day-number" id="today-day-num">${dayNum}</div>
+      <div class="day-label">OF ${TOTAL} DAYS</div>
+      <div class="day-date">${fmtLong(today)}</div>
+      <div class="days-remaining"><strong>${remaining}</strong> day${remaining !== 1 ? 's' : ''} remaining</div>
+      <div class="progress-section">
+        <div class="progress-labels">
+          <span>Day 1</span>
+          <span>${pct}% complete</span>
+          <span>Day ${TOTAL}</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill" style="width:${pct}%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="log-card">
+      <div class="card-title">Today's Log</div>
+      <textarea class="log-textarea" id="today-log"
+        placeholder="How was your day? Write anything — wins, learnings, feelings..."
+      >${log}</textarea>
+      <div class="save-row">
+        <span class="save-status${log ? ' saved' : ''}" id="save-status">
+          ${log ? 'Saved' : 'Unsaved'}
+        </span>
+        <button class="btn-save" id="btn-save">Save</button>
+      </div>
+    </div>
+
+    <div class="backup-row">
+      <button class="btn-backup" onclick="exportData()">Export Backup</button>
+      <button class="btn-backup" onclick="document.getElementById('import-input').click()">Import Backup</button>
+    </div>
+  `;
+
+  document.getElementById('btn-save').addEventListener('click', () => {
+    const text = document.getElementById('today-log').value;
+    saveLog(todayStr, text);
+    const el = document.getElementById('save-status');
+    el.textContent = text.trim() ? 'Saved!' : 'Unsaved';
+    el.className = 'save-status' + (text.trim() ? ' saved' : '');
+    refreshTile(todayStr);
+  });
+
+  document.getElementById('today-log').addEventListener('blur', () => {
+    const text = document.getElementById('today-log').value;
+    saveLog(todayStr, text);
+    const el = document.getElementById('save-status');
+    el.textContent = text.trim() ? 'Saved' : 'Unsaved';
+    el.className = 'save-status' + (text.trim() ? ' saved' : '');
+    refreshTile(todayStr);
+  });
+}
+
+// ────────────────────────────────────────────────────────
+// Render: All Days view
+// ────────────────────────────────────────────────────────
+let allDaysBuilt = false;
+
+function renderAllDays() {
+  if (allDaysBuilt) return;
+  allDaysBuilt = true;
+
+  const container = document.getElementById('view-all');
+  container.innerHTML = '';
+
+  const today    = new Date();
+  const todayStr = toDateStr(today);
+  const logs     = loadLogs();
+
+  let curMonthKey = null, gridEl = null;
+
+  for (let i = 0; i < TOTAL; i++) {
+    const date    = addDays(START_DATE, i);
+    const dateStr = toDateStr(date);
+    const dayNum  = i + 1;
+    const mk      = date.getFullYear() + '-' + date.getMonth();
+
+    if (mk !== curMonthKey) {
+      curMonthKey = mk;
+      const section = document.createElement('div');
+      section.className = 'month-section';
+
+      const title = document.createElement('div');
+      title.className = 'month-title';
+      title.textContent = date.toLocaleDateString('en-GB', { month:'long', year:'numeric' });
+      section.appendChild(title);
+
+      gridEl = document.createElement('div');
+      gridEl.className = 'days-grid';
+      section.appendChild(gridEl);
+      container.appendChild(section);
+    }
+
+    const tile = document.createElement('div');
+    tile.className = 'day-tile';
+    tile.dataset.ds = dateStr;
+
+    if (dateStr === todayStr)     tile.classList.add('today');
+    else if (date < today)        tile.classList.add('past');
+    else                          tile.classList.add('future');
+
+    const numEl  = document.createElement('div');
+    numEl.className = 'tile-day-num';
+    numEl.textContent = dayNum;
+
+    const dateEl = document.createElement('div');
+    dateEl.className = 'tile-date';
+    dateEl.textContent = fmtShort(date);
+
+    tile.appendChild(numEl);
+    tile.appendChild(dateEl);
+
+    if (logs[dateStr]) {
+      const dot = document.createElement('div');
+      dot.className = 'log-dot';
+      tile.appendChild(dot);
+    }
+
+    tile.addEventListener('click', () => openModal(dateStr, dayNum, date));
+    gridEl.appendChild(tile);
+  }
+}
+
+function refreshTile(dateStr) {
+  const tile = document.querySelector(`.day-tile[data-ds="${dateStr}"]`);
+  if (!tile) return;
+  const hasDot = tile.querySelector('.log-dot');
+  const hasLog = !!getLog(dateStr).trim();
+  if (hasLog && !hasDot) {
+    const dot = document.createElement('div');
+    dot.className = 'log-dot';
+    tile.appendChild(dot);
+  } else if (!hasLog && hasDot) {
+    hasDot.remove();
+  }
+}
+
+// ────────────────────────────────────────────────────────
+// Bottom Sheet Modal
+// ────────────────────────────────────────────────────────
+let activeDate = null;
+
+function openModal(dateStr, dayNum, date) {
+  activeDate = dateStr;
+  const remaining = TOTAL - dayNum;
+
+  document.getElementById('sheet-day-num').textContent = `Day ${dayNum} of ${TOTAL}`;
+  document.getElementById('sheet-meta').textContent =
+    `${fmtLong(date)}  ·  ${remaining} day${remaining !== 1 ? 's' : ''} remaining`;
+  document.getElementById('sheet-textarea').value = getLog(dateStr);
+
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('sheet-textarea').focus(), 280);
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  activeDate = null;
+}
+
+// Close on overlay tap (not on sheet tap)
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function saveSheetLog() {
+  if (!activeDate) return;
+  const text = document.getElementById('sheet-textarea').value;
+  saveLog(activeDate, text);
+  refreshTile(activeDate);
+
+  // sync Today view if the sheet was for today
+  const todayLog = document.getElementById('today-log');
+  if (todayLog && activeDate === toDateStr(new Date())) {
+    todayLog.value = text;
+    const st = document.getElementById('save-status');
+    if (st) { st.textContent = text.trim() ? 'Saved' : 'Unsaved'; st.className = 'save-status' + (text.trim() ? ' saved' : ''); }
+  }
+  closeModal();
+}
+
+// ────────────────────────────────────────────────────────
+// View switching
+// ────────────────────────────────────────────────────────
+function switchView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+  if (view === 'today') {
+    document.getElementById('view-today').classList.add('active');
+    document.getElementById('nav-today').classList.add('active');
+    renderToday();
+  } else {
+    document.getElementById('view-all').classList.add('active');
+    document.getElementById('nav-all').classList.add('active');
+    renderAllDays();
+  }
+}
+
+// ────────────────────────────────────────────────────────
+// Export / Import
+// ────────────────────────────────────────────────────────
+function exportData() {
+  const json = JSON.stringify(loadLogs(), null, 2);
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(new Blob([json], { type:'application/json' }));
+  a.download = 'internship-logs-backup.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function importData(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (typeof imported !== 'object' || Array.isArray(imported)) throw new Error();
+      const merged = { ...loadLogs(), ...imported };
+      persistLogs(merged);
+      allDaysBuilt = false;
+      renderToday();
+      alert(`Imported ${Object.keys(imported).length} log entries.`);
+    } catch {
+      alert('Invalid backup file — must be a JSON object.');
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+// ────────────────────────────────────────────────────────
+// Init
+// ────────────────────────────────────────────────────────
+renderToday();
+</script>
+</body>
+</html>
