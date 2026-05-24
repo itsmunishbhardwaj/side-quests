@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo Day Voting</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f4f6f9;
+      color: #1a1a2e;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    header h1 { font-size: 2rem; letter-spacing: -0.5px; }
+    header p  { margin-top: 0.4rem; opacity: 0.7; font-size: 0.95rem; }
+
+    main {
+      max-width: 1050px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .toolbar span { font-size: 0.85rem; color: #666; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: #4f46e5; color: #fff; }
+    .btn-primary:hover { background: #4338ca; }
+
+    .btn-vote {
+      background: #f0f0f5;
+      color: #4f46e5;
+      border: 1.5px solid #d1d5db;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.8rem;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .btn-vote:hover:not(:disabled) { background: #e8e8ff; border-color: #a5b4fc; }
+    .btn-vote:disabled { opacity: 0.55; cursor: not-allowed; background: #f9f9fb; }
+    .btn-vote.voted { background: #ede9fe; border-color: #a78bfa; color: #6d28d9; }
+
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    table { width: 100%; border-collapse: collapse; background: #fff; }
+
+    thead th {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 0.85rem 1rem;
+      text-align: left;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    tbody tr { border-bottom: 1px solid #f0f0f5; transition: background 0.1s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #fafafa; }
+
+    td { padding: 0.9rem 1rem; font-size: 0.92rem; vertical-align: middle; }
+
+    .td-votes { text-align: center; white-space: nowrap; }
+    .vote-count {
+      display: inline-block;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #4f46e5;
+      min-width: 2rem;
+      text-align: right;
+      margin-right: 0.4rem;
+    }
+
+    .badge-date {
+      display: inline-block;
+      background: #f0fdf4;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+    .badge-tbd { color: #9ca3af; font-size: 0.8rem; font-style: italic; }
+
+    .state-row td {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #9ca3af;
+      font-size: 0.95rem;
+    }
+    .spinner {
+      display: inline-block;
+      width: 20px; height: 20px;
+      border: 3px solid #e5e7eb;
+      border-top-color: #4f46e5;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: #fff;
+      border-radius: 14px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+      position: relative;
+    }
+    .modal h2 { font-size: 1.25rem; margin-bottom: 1.25rem; color: #1a1a2e; }
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none; border: none;
+      font-size: 1.4rem; cursor: pointer;
+      color: #9ca3af; line-height: 1;
+    }
+    .modal-close:hover { color: #374151; }
+
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem; font-weight: 600;
+      color: #374151; margin-bottom: 0.3rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border: 1.5px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      resize: vertical;
+      transition: border-color 0.15s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: #4f46e5; }
+    .form-hint { font-size: 0.75rem; color: #9ca3af; margin-top: 0.2rem; }
+
+    .form-error {
+      color: #dc2626; font-size: 0.82rem;
+      margin-top: 0.75rem; display: none;
+    }
+    .form-error.visible { display: block; }
+
+    .form-actions {
+      display: flex; justify-content: flex-end;
+      gap: 0.75rem; margin-top: 1.5rem;
+    }
+    .btn-ghost { background: none; border: 1.5px solid #d1d5db; color: #374151; }
+    .btn-ghost:hover { background: #f9fafb; }
+
+    #toast {
+      position: fixed;
+      bottom: 1.5rem; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #1a1a2e; color: #fff;
+      padding: 0.7rem 1.4rem;
+      border-radius: 30px;
+      font-size: 0.88rem; font-weight: 500;
+      z-index: 200;
+      transition: transform 0.3s ease;
+      pointer-events: none;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+    #toast.is-error { background: #dc2626; }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      .hide-mobile { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Demo Day Voting</h1>
+  <p>Upvote the topics you want to see. Add your own if you have something to share.</p>
+</header>
+
+<main>
+  <div class="toolbar">
+    <span id="topic-count">Loading…</span>
+    <button class="btn btn-primary" id="open-modal-btn">+ Add Topic</button>
+  </div>
+
+  <div class="table-wrapper">
+    <table id="topics-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Topic</th>
+          <th class="hide-mobile">Seed Idea</th>
+          <th>Date</th>
+          <th>Votes</th>
+        </tr>
+      </thead>
+      <tbody id="topics-tbody">
+        <tr class="state-row">
+          <td colspan="5"><span class="spinner"></span> Loading topics…</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <button class="modal-close" id="close-modal-btn" aria-label="Close">&times;</button>
+    <h2 id="modal-title">Add a Demo Topic</h2>
+    <form id="add-topic-form" novalidate>
+      <div class="form-group">
+        <label for="field-name">Your Name <span style="color:#dc2626">*</span></label>
+        <input type="text" id="field-name" placeholder="Jane Smith" required />
+      </div>
+      <div class="form-group">
+        <label for="field-topic">Topic Title <span style="color:#dc2626">*</span></label>
+        <input type="text" id="field-topic" placeholder="Building RAG pipelines with open-source tools" required />
+      </div>
+      <div class="form-group">
+        <label for="field-seed">Seed Idea</label>
+        <textarea id="field-seed" rows="3" placeholder="A short description of what you'll demo…"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="field-date">Preferred Date</label>
+        <input type="date" id="field-date" />
+        <p class="form-hint">Optional — leave blank if flexible.</p>
+      </div>
+      <div class="form-error" id="form-error"></div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" id="cancel-btn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="submit-btn">Add Topic</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+// ── CONFIG — replace with your deployed Apps Script /exec URL ─────────────────
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzCsL1EFrbcVDhnDmE-XMDQ4xrdu6SnY5EIoIRLdhwBfVVzKq7ZvbzXudBDUHdGkv_i/exec';
+
+// ── VOTER IDENTITY ────────────────────────────────────────────────────────────
+function getOrCreateVoterId() {
+  const KEY = 'demoday_voter_id';
+  let id = localStorage.getItem(KEY);
+  if (!id) {
+    id = (crypto.randomUUID ?? fallbackUUID)();
+    localStorage.setItem(KEY, id);
+  }
+  return id;
+}
+
+function fallbackUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
+const VOTER_ID = getOrCreateVoterId();
+let votedTopics = new Set();
+
+// ── API ───────────────────────────────────────────────────────────────────────
+async function fetchTopics() {
+  const res = await fetch(`${APPS_SCRIPT_URL}?action=getTopics`);
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data.topics;
+}
+
+// Content-Type: text/plain avoids CORS preflight (Apps Script can't handle OPTIONS)
+async function apiPost(body) {
+  const res = await fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function formatDate(raw) {
+  if (!raw || !raw.trim()) return '<span class="badge-tbd">TBD</span>';
+  try {
+    const d = new Date(raw.includes('T') ? raw : raw + 'T00:00');
+    return `<span class="badge-date">${d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>`;
+  } catch {
+    return `<span class="badge-date">${escHtml(raw)}</span>`;
+  }
+}
+
+function renderTopics(list) {
+  const tbody   = document.getElementById('topics-tbody');
+  const counter = document.getElementById('topic-count');
+
+  if (!list || list.length === 0) {
+    tbody.innerHTML = '<tr class="state-row"><td colspan="5">No topics yet — be the first to add one!</td></tr>';
+    counter.textContent = '0 topics';
+    return;
+  }
+
+  counter.textContent = `${list.length} topic${list.length === 1 ? '' : 's'}`;
+
+  list.forEach(t => {
+    if (Array.isArray(t.voters) && t.voters.includes(VOTER_ID)) votedTopics.add(t.id);
+  });
+
+  tbody.innerHTML = list.map(t => {
+    const voted = votedTopics.has(t.id);
+    return `
+      <tr>
+        <td>${escHtml(t.name)}</td>
+        <td><strong>${escHtml(t.topic)}</strong></td>
+        <td class="hide-mobile">${escHtml(t.seed_idea)}</td>
+        <td>${formatDate(t.scheduled_date)}</td>
+        <td class="td-votes">
+          <span class="vote-count" id="count-${t.id}">${t.vote_count}</span>
+          <button
+            class="btn btn-vote${voted ? ' voted' : ''}"
+            data-id="${escHtml(t.id)}"
+            ${voted ? 'disabled aria-label="Already voted"' : `aria-label="Upvote ${escHtml(t.topic)}"`}
+            onclick="handleVote(this)"
+          >${voted ? '✓ Voted' : '▲ Vote'}</button>
+        </td>
+      </tr>`;
+  }).join('');
+}
+
+// ── VOTE ──────────────────────────────────────────────────────────────────────
+async function handleVote(btn) {
+  if (btn.disabled) return;
+  const topicId = btn.dataset.id;
+  btn.disabled = true;
+  btn.textContent = '…';
+
+  try {
+    const result = await apiPost({ action: 'vote', topic_id: topicId, voter_id: VOTER_ID });
+
+    if (result.success) {
+      votedTopics.add(topicId);
+      btn.textContent = '✓ Voted';
+      btn.classList.add('voted');
+      const countEl = document.getElementById(`count-${topicId}`);
+      if (countEl) countEl.textContent = parseInt(countEl.textContent, 10) + 1;
+      showToast('Vote recorded!');
+    } else if (result.reason === 'already_voted') {
+      votedTopics.add(topicId);
+      btn.textContent = '✓ Voted';
+      btn.classList.add('voted');
+      showToast('You already voted for this topic.', true);
+    } else {
+      btn.disabled = false;
+      btn.textContent = '▲ Vote';
+      showToast('Vote failed — please try again.', true);
+    }
+  } catch (err) {
+    console.error('Vote error:', err);
+    btn.disabled = false;
+    btn.textContent = '▲ Vote';
+    showToast('Network error — please try again.', true);
+  }
+}
+
+// ── LOAD ──────────────────────────────────────────────────────────────────────
+async function loadTopics() {
+  try {
+    renderTopics(await fetchTopics());
+  } catch (err) {
+    console.error('Load error:', err);
+    document.getElementById('topics-tbody').innerHTML =
+      '<tr class="state-row"><td colspan="5">Failed to load topics. Check the Apps Script URL in the page source.</td></tr>';
+    document.getElementById('topic-count').textContent = '';
+  }
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────────────
+const overlay   = document.getElementById('modal-overlay');
+const formError = document.getElementById('form-error');
+
+function openModal()  { overlay.classList.add('open'); document.getElementById('field-name').focus(); }
+function closeModal() {
+  overlay.classList.remove('open');
+  document.getElementById('add-topic-form').reset();
+  formError.classList.remove('visible');
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = false;
+  btn.textContent = 'Add Topic';
+}
+
+document.getElementById('open-modal-btn').addEventListener('click', openModal);
+document.getElementById('close-modal-btn').addEventListener('click', closeModal);
+document.getElementById('cancel-btn').addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal(); });
+
+document.getElementById('add-topic-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  formError.classList.remove('visible');
+
+  const name           = document.getElementById('field-name').value.trim();
+  const topic          = document.getElementById('field-topic').value.trim();
+  const seed_idea      = document.getElementById('field-seed').value.trim();
+  const scheduled_date = document.getElementById('field-date').value;
+
+  if (!name || !topic) {
+    formError.textContent = 'Name and Topic are required.';
+    formError.classList.add('visible');
+    return;
+  }
+
+  const submitBtn = document.getElementById('submit-btn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Adding…';
+
+  try {
+    await apiPost({ action: 'addTopic', name, topic, seed_idea, scheduled_date });
+    await loadTopics();
+    closeModal();
+    showToast('Topic added!');
+  } catch (err) {
+    console.error('Add topic error:', err);
+    formError.textContent = `Error: ${err.message}`;
+    formError.classList.add('visible');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Add Topic';
+  }
+});
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg, isError = false) {
+  const toast = document.getElementById('toast');
+  clearTimeout(toastTimer);
+  toast.textContent = msg;
+  toast.className = 'show' + (isError ? ' is-error' : '');
+  toastTimer = setTimeout(() => { toast.className = ''; }, 3000);
+}
+
+loadTopics();
+</script>
+</body>
+</html>
