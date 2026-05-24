@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Jargon, ELI5</title>
+<meta name="description" content="A hand-picked stash of the clearest ELI5 explanations on the internet for the AI words people throw around." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fef9e7;
+    --ink: #1a1a1a;
+    --pink: #ff3c8e;
+    --lemon: #ffe24d;
+    --cyan: #3ddbd9;
+    --lime: #a4ff3c;
+    --tangerine: #ff9a52;
+    --lavender: #c89aff;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* paper grain */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: 0.6;
+    mix-blend-mode: multiply;
+  }
+
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* HEADER */
+  header.masthead {
+    margin-bottom: 40px;
+    text-align: left;
+  }
+  .kicker {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--lemon);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    padding: 6px 12px;
+    text-transform: uppercase;
+    transform: rotate(-1.5deg);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(48px, 9vw, 110px);
+    line-height: 0.92;
+    margin: 0 0 14px;
+    letter-spacing: -0.02em;
+  }
+  h1 .blob {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--paper);
+    padding: 0 14px;
+    transform: rotate(-2deg) translateY(-2px);
+    margin: 0 4px;
+  }
+  h1 .blob.eli5 {
+    background: var(--cyan);
+    color: var(--ink);
+    transform: rotate(1.5deg);
+  }
+  .tagline {
+    font-size: 18px;
+    line-height: 1.5;
+    max-width: 620px;
+    margin: 0 0 28px;
+    color: #333;
+  }
+  .tagline em {
+    background: var(--lemon);
+    font-style: normal;
+    padding: 2px 6px;
+  }
+
+  /* CONTROLS */
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 36px;
+  }
+  .search {
+    flex: 1 1 280px;
+    max-width: 420px;
+    position: relative;
+  }
+  .search input {
+    width: 100%;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    padding: 14px 16px 14px 44px;
+    border: 3px solid var(--ink);
+    background: var(--paper);
+    border-radius: 0;
+    box-shadow: 4px 4px 0 var(--ink);
+    outline: none;
+    transition: transform 0.1s;
+  }
+  .search input:focus {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .search::before {
+    content: "🔍";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+  }
+  .surprise {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    background: var(--lime);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    padding: 13px 18px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--ink);
+    transform: rotate(1deg);
+    transition: transform 0.1s;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .surprise:hover {
+    transform: rotate(0) translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .surprise:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--ink);
+  }
+  .counter {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    color: #555;
+    margin-left: auto;
+  }
+  .counter strong { color: var(--ink); }
+
+  /* SECTIONS */
+  section.terms {
+    margin-bottom: 56px;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .section-head h2 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(28px, 4.5vw, 44px);
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .section-head h2 .swatch {
+    display: inline-block;
+    background: currentColor;
+    padding: 0 10px;
+    color: var(--ink) !important;
+  }
+  .section-head .num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4px 10px;
+    transform: rotate(-2deg);
+  }
+
+  /* CARD GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+    padding: 18px 18px 50px;
+    border: 3px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--ink);
+    position: relative;
+    transition: transform 0.12s ease-out, box-shadow 0.12s ease-out;
+    min-height: 150px;
+  }
+  .card .term {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.1;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .card .hook {
+    font-size: 14.5px;
+    line-height: 1.4;
+    margin: 0;
+    color: var(--ink);
+    opacity: 0.85;
+  }
+  .card .arrow {
+    position: absolute;
+    bottom: 14px;
+    right: 16px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 5px 10px;
+  }
+  .card:hover {
+    transform: rotate(0) translate(-3px, -3px) !important;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+
+  /* section accents */
+  .basics .card { background: var(--lemon); }
+  .thinks .card { background: var(--cyan); }
+  .learns .card { background: var(--lime); }
+  .uses .card { background: var(--pink); color: #fff; }
+  .uses .card .hook { color: #fff; opacity: 0.95; }
+  .uses .card .arrow { background: var(--paper); color: var(--ink); }
+  .safe .card { background: var(--tangerine); }
+  .hood .card { background: var(--lavender); }
+
+  /* random-ish rotations via nth-child */
+  .card:nth-child(7n+1) { transform: rotate(-1.2deg); }
+  .card:nth-child(7n+2) { transform: rotate(0.8deg); }
+  .card:nth-child(7n+3) { transform: rotate(-0.4deg); }
+  .card:nth-child(7n+4) { transform: rotate(1.4deg); }
+  .card:nth-child(7n+5) { transform: rotate(-0.9deg); }
+  .card:nth-child(7n+6) { transform: rotate(0.5deg); }
+  .card:nth-child(7n+7) { transform: rotate(-1.6deg); }
+
+  /* EXPANDABLE CARDS */
+  article.card {
+    cursor: default;
+    padding: 0;
+    display: block;
+    overflow: hidden;
+  }
+  .card-head {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 18px 18px 50px;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    position: relative;
+    min-height: 150px;
+  }
+  .card-head:focus-visible {
+    outline: 3px dashed var(--ink);
+    outline-offset: -8px;
+  }
+  .note {
+    padding: 18px 18px 22px;
+    border-top: 2px dashed rgba(0, 0, 0, 0.35);
+    font-size: 17px;
+    line-height: 1.45;
+  }
+  .uses .note { border-top-color: rgba(255, 255, 255, 0.55); }
+  .note p { margin: 0 0 12px; }
+  .note p:last-child { margin: 0; }
+  .diagram-wrap {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 3px 3px 0 var(--ink);
+    margin: 0 auto 14px;
+    max-width: 360px;
+  }
+  .diagram {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  article.card[data-open="true"] {
+    transform: rotate(0) !important;
+    grid-column: 1 / -1;
+    z-index: 5;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+  article.card[data-open="true"] .note {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  article.card[data-open="true"] .diagram-wrap {
+    margin: 0;
+    max-width: none;
+  }
+  @media (max-width: 700px) {
+    article.card[data-open="true"] .note {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 64px;
+    padding-top: 28px;
+    border-top: 3px dashed var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    color: #444;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    align-items: center;
+  }
+  footer .stamp {
+    background: var(--ink);
+    color: var(--lemon);
+    padding: 4px 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 12px;
+    transform: rotate(-1deg);
+  }
+  footer a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+  footer a:hover { background: var(--lemon); }
+
+  .empty-msg {
+    grid-column: 1 / -1;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    padding: 30px;
+    text-align: center;
+    border: 3px dashed var(--ink);
+    display: none;
+  }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .wrap { padding: 28px 16px 60px; }
+    .grid { grid-template-columns: 1fr; gap: 14px; }
+    .card { min-height: auto; }
+    .card:nth-child(7n+1) { transform: rotate(-0.4deg); }
+    .card:nth-child(7n+2) { transform: rotate(0.3deg); }
+    .card:nth-child(7n+3) { transform: rotate(-0.2deg); }
+    .card:nth-child(7n+4) { transform: rotate(0.4deg); }
+    .card:nth-child(7n+5) { transform: rotate(-0.3deg); }
+    .card:nth-child(7n+6) { transform: rotate(0.2deg); }
+    .card:nth-child(7n+7) { transform: rotate(-0.5deg); }
+    .counter { margin-left: 0; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="wobble" x="-2%" y="-2%" width="104%" height="104%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 z" fill="#1a1a1a"/>
+    </marker>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="kicker">side-quest №2 · a zine</div>
+    <h1>AI Jargon<span class="blob">,</span><br><span class="blob eli5">ELI5</span></h1>
+    <p class="tagline">a hand-picked stash of the clearest explanations on the internet for the AI words people throw around. one click <em>→</em> you get it.</p>
+  </header>
+
+  <div class="controls">
+    <div class="search">
+      <input type="text" id="search" placeholder="search a term…" autocomplete="off" />
+    </div>
+    <button class="surprise" id="surprise">🎲 surprise me</button>
+    <div class="counter"><strong id="count">42</strong> terms · all links open in a new tab</div>
+  </div>
+
+  <div class="empty-msg" id="empty">nothing matches that. try a shorter word?</div>
+
+  <div id="sections-root"></div>
+
+  <footer>
+    <span class="stamp">made with love</span>
+    <span>side-quest №2 by <a href="https://github.com/itsmunishbhardwaj" target="_blank" rel="noopener">munish</a></span>
+    <span>·</span>
+    <span>got a better ELI5 link? open a PR.</span>
+  </footer>
+
+</div>
+
+<!-- term data — one file per term, in section order -->
+<script>window.TERMS = [];</script>
+<!-- basics -->
+<script src="terms/llm.js"></script>
+<script src="terms/token.js"></script>
+<script src="terms/embedding.js"></script>
+<script src="terms/parameter.js"></script>
+<script src="terms/context-window.js"></script>
+<script src="terms/inference.js"></script>
+<script src="terms/multimodal.js"></script>
+<!-- thinking -->
+<script src="terms/transformer.js"></script>
+<script src="terms/attention.js"></script>
+<script src="terms/self-attention.js"></script>
+<script src="terms/temperature.js"></script>
+<script src="terms/top-p-sampling.js"></script>
+<script src="terms/hallucination.js"></script>
+<!-- learning -->
+<script src="terms/pretraining.js"></script>
+<script src="terms/fine-tuning.js"></script>
+<script src="terms/rlhf.js"></script>
+<script src="terms/constitutional-ai.js"></script>
+<script src="terms/neural-network.js"></script>
+<script src="terms/gradient-descent.js"></script>
+<script src="terms/backpropagation.js"></script>
+<script src="terms/overfitting.js"></script>
+<!-- using -->
+<script src="terms/prompt-engineering.js"></script>
+<script src="terms/few-shot.js"></script>
+<script src="terms/chain-of-thought.js"></script>
+<script src="terms/rag.js"></script>
+<script src="terms/vector-database.js"></script>
+<script src="terms/agent.js"></script>
+<script src="terms/tool-use.js"></script>
+<script src="terms/mcp.js"></script>
+<!-- safety -->
+<script src="terms/alignment.js"></script>
+<script src="terms/jailbreak.js"></script>
+<script src="terms/red-teaming.js"></script>
+<script src="terms/interpretability.js"></script>
+<!-- hood -->
+<script src="terms/gpt.js"></script>
+<script src="terms/claude.js"></script>
+<script src="terms/llama.js"></script>
+<script src="terms/diffusion-model.js"></script>
+<script src="terms/gpu.js"></script>
+<script src="terms/quantization.js"></script>
+<script src="terms/distillation.js"></script>
+<script src="terms/lora.js"></script>
+<script src="terms/mixture-of-experts.js"></script>
+
+<script>
+const SECTIONS = [
+  { id: 'basics',   cls: 'basics', num: '01', label: 'The Basics' },
+  { id: 'thinking', cls: 'thinks', num: '02', label: 'How It Thinks' },
+  { id: 'learning', cls: 'learns', num: '03', label: 'How It Learns' },
+  { id: 'using',    cls: 'uses',   num: '04', label: 'How We Use It' },
+  { id: 'safety',   cls: 'safe',   num: '05', label: 'Keeping It Safe' },
+  { id: 'hood',     cls: 'hood',   num: '06', label: 'Under The Hood' },
+];
+
+function buildCard(t) {
+  const art = document.createElement('article');
+  art.className = 'card';
+  art.innerHTML = `
+    <button class="card-head" type="button" aria-expanded="false">
+      <h3 class="term">${t.term}</h3>
+      <p class="hook">${t.hook}</p>
+      <span class="arrow">read ↓</span>
+    </button>
+    <div class="note" hidden>
+      <div class="diagram-wrap">${t.diagram}</div>
+      <div class="text-wrap">${t.note}</div>
+    </div>
+  `;
+  const btn = art.querySelector('.card-head');
+  const note = art.querySelector('.note');
+  const arrow = art.querySelector('.arrow');
+  btn.addEventListener('click', () => {
+    const open = art.dataset.open === 'true';
+    art.dataset.open = open ? 'false' : 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    note.hidden = open;
+    arrow.textContent = open ? 'read ↓' : 'close ↑';
+  });
+  return art;
+}
+
+const root = document.getElementById('sections-root');
+SECTIONS.forEach(sec => {
+  const terms = TERMS.filter(t => t.section === sec.id);
+  if (!terms.length) return;
+  const section = document.createElement('section');
+  section.className = `terms ${sec.cls}`;
+  section.innerHTML = `
+    <div class="section-head">
+      <span class="num">${sec.num}</span>
+      <h2>${sec.label}</h2>
+    </div>
+    <div class="grid"></div>
+  `;
+  terms.forEach(t => section.querySelector('.grid').appendChild(buildCard(t)));
+  root.appendChild(section);
+});
+
+// search + counter + surprise
+const input = document.getElementById('search');
+const empty = document.getElementById('empty');
+const counter = document.getElementById('count');
+const allCards = () => document.querySelectorAll('.card');
+const allSections = () => document.querySelectorAll('section.terms');
+
+counter.textContent = TERMS.length;
+
+input.addEventListener('input', () => {
+  const q = input.value.toLowerCase().trim();
+  let visible = 0;
+  allCards().forEach(c => {
+    const show = !q || c.textContent.toLowerCase().includes(q);
+    c.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  allSections().forEach(s => {
+    const any = [...s.querySelectorAll('.card')].some(c => c.style.display !== 'none');
+    s.style.display = any ? '' : 'none';
+  });
+  empty.style.display = visible === 0 ? 'block' : 'none';
+  counter.textContent = visible;
+});
+
+document.getElementById('surprise').addEventListener('click', e => {
+  e.preventDefault();
+  const visible = [...allCards()].filter(c => c.style.display !== 'none');
+  if (!visible.length) return;
+  const pick = visible[Math.floor(Math.random() * visible.length)];
+  pick.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  if (pick.tagName === 'ARTICLE' && pick.dataset.open !== 'true') {
+    pick.querySelector('.card-head')?.click();
+  }
+});
+</script>
+</body>
+</html>
