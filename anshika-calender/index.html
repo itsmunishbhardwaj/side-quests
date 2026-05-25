@@ -421,6 +421,50 @@
     .out-of-range .big-emoji { font-size: 3rem; margin-bottom: 12px; }
     .out-of-range h2 { font-size: 1.2rem; color: var(--pink-dark); margin-bottom: 8px; }
     .out-of-range p  { font-size: 0.9rem; line-height: 1.5; }
+
+    /* ── Holiday / Half-day tile colours ── */
+    .day-tile.holiday  { background: #c8f0c8; border-color: #81c784; }
+    .day-tile.half-day { background: #fff9c4; border-color: #f9a825; }
+    .day-tile.today.holiday  { background: #388e3c; box-shadow: 0 2px 10px rgba(56,142,60,0.35); }
+    .day-tile.today.half-day { background: #f9a825; box-shadow: 0 2px 10px rgba(249,168,37,0.35); }
+    .day-tile.holiday  .tile-day-num, .day-tile.holiday  .tile-date { color: #1b5e20; }
+    .day-tile.half-day .tile-day-num, .day-tile.half-day .tile-date { color: #5d4037; }
+    .day-tile.today.holiday  .tile-day-num, .day-tile.today.holiday  .tile-date { color: white; }
+    .day-tile.today.half-day .tile-day-num, .day-tile.today.half-day .tile-date { color: white; }
+    .day-tile.holiday .log-dot  { background: #1b5e20; }
+    .day-tile.half-day .log-dot { background: #5d4037; }
+
+    /* ── Day-type selector ── */
+    .type-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .type-row-label {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .type-btn {
+      flex: 1;
+      padding: 8px 6px;
+      border-radius: 10px;
+      border: 1.5px solid var(--pink-light);
+      background: white;
+      color: var(--text-mid);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      min-width: 0;
+    }
+    .type-btn.active        { border-color: var(--pink-primary); background: var(--pink-light); color: var(--pink-dark); }
+    .type-btn.holiday.active { border-color: #388e3c; background: #e8f5e9; color: #1b5e20; }
+    .type-btn.half.active    { border-color: #f9a825; background: #fffde7; color: #5d4037; }
   </style>
 </head>
 <body>
@@ -457,6 +501,12 @@
     <div class="sheet-handle"></div>
     <div class="sheet-day-num" id="sheet-day-num"></div>
     <div class="sheet-meta"  id="sheet-meta"></div>
+    <div class="type-row">
+      <span class="type-row-label">Mark as:</span>
+      <button class="type-btn active" data-type="normal"  onclick="setSheetType('normal')">Normal</button>
+      <button class="type-btn holiday" data-type="holiday" onclick="setSheetType('holiday')">Holiday 🌿</button>
+      <button class="type-btn half"    data-type="half"    onclick="setSheetType('half')">Half Day 🌗</button>
+    </div>
     <textarea class="sheet-textarea" id="sheet-textarea" placeholder="Write your log for this day..."></textarea>
     <div class="sheet-actions">
       <button class="btn-cancel"     onclick="closeModal()">Cancel</button>
@@ -496,6 +546,33 @@ function saveLog(dateStr, text) {
 }
 
 function getLog(dateStr) { return loadLogs()[dateStr] || ''; }
+
+const TYPES_KEY = 'anshika_internship_types_v1';
+
+function loadTypes() {
+  try { return JSON.parse(localStorage.getItem(TYPES_KEY) || '{}'); }
+  catch { return {}; }
+}
+
+function saveType(dateStr, type) {
+  const types = loadTypes();
+  if (type === 'normal') delete types[dateStr];
+  else types[dateStr] = type;
+  localStorage.setItem(TYPES_KEY, JSON.stringify(types));
+}
+
+// Returns effective work-days elapsed up to and including calendarDayNum.
+// Holidays subtract 1, half-days subtract 0.5.
+function getEffectiveElapsed(calendarDayNum) {
+  const types = loadTypes();
+  let holidays = 0, halfDays = 0;
+  for (let i = 0; i < calendarDayNum; i++) {
+    const ds = toDateStr(addDays(START_DATE, i));
+    if (types[ds] === 'holiday') holidays++;
+    else if (types[ds] === 'half') halfDays++;
+  }
+  return calendarDayNum - holidays - halfDays * 0.5;
+}
 
 // ────────────────────────────────────────────────────────
 // Date helpers
@@ -551,16 +628,20 @@ function renderToday() {
     return;
   }
 
-  const remaining = TOTAL - dayNum;
-  const pct       = ((dayNum / TOTAL) * 100).toFixed(1);
-  const log       = getLog(todayStr);
+  const effective  = getEffectiveElapsed(dayNum);
+  const remaining  = TOTAL - effective;
+  const pct        = ((effective / TOTAL) * 100).toFixed(1);
+  const log        = getLog(todayStr);
+  const todayType  = loadTypes()[todayStr] || 'normal';
+  const dispNum    = Number.isInteger(effective) ? effective : effective.toFixed(1);
+  const remDisp    = Number.isInteger(remaining) ? remaining : remaining.toFixed(1);
 
   container.innerHTML = `
     <div class="day-hero">
-      <div class="day-number" id="today-day-num">${dayNum}</div>
+      <div class="day-number" id="today-day-num">${dispNum}</div>
       <div class="day-label">OF ${TOTAL} DAYS</div>
       <div class="day-date">${fmtLong(today)}</div>
-      <div class="days-remaining"><strong>${remaining}</strong> day${remaining !== 1 ? 's' : ''} remaining</div>
+      <div class="days-remaining"><strong>${remDisp}</strong> work day${remaining !== 1 ? 's' : ''} remaining</div>
       <div class="progress-section">
         <div class="progress-labels">
           <span>Day 1</span>
@@ -570,6 +651,12 @@ function renderToday() {
         <div class="progress-bar-bg">
           <div class="progress-bar-fill" id="progress-fill" style="width:${pct}%"></div>
         </div>
+      </div>
+      <div class="type-row">
+        <span class="type-row-label">Today is:</span>
+        <button class="type-btn${todayType==='normal'?' active':''}"           onclick="setTodayType('normal')">Normal</button>
+        <button class="type-btn holiday${todayType==='holiday'?' active':''}"  onclick="setTodayType('holiday')">Holiday 🌿</button>
+        <button class="type-btn half${todayType==='half'?' active':''}"        onclick="setTodayType('half')">Half Day 🌗</button>
       </div>
     </div>
 
@@ -611,6 +698,15 @@ function renderToday() {
   });
 }
 
+function setTodayType(type) {
+  const todayStr = toDateStr(new Date());
+  const ta = document.getElementById('today-log');
+  if (ta) saveLog(todayStr, ta.value);
+  saveType(todayStr, type);
+  renderToday();
+  refreshTile(todayStr);
+}
+
 // ────────────────────────────────────────────────────────
 // Render: All Days view
 // ────────────────────────────────────────────────────────
@@ -626,6 +722,7 @@ function renderAllDays() {
   const today    = new Date();
   const todayStr = toDateStr(today);
   const logs     = loadLogs();
+  const types    = loadTypes();
 
   let curMonthKey = null, gridEl = null;
 
@@ -654,6 +751,9 @@ function renderAllDays() {
     const tile = document.createElement('div');
     tile.className = 'day-tile';
     tile.dataset.ds = dateStr;
+
+    if (types[dateStr] === 'holiday')  tile.classList.add('holiday');
+    else if (types[dateStr] === 'half') tile.classList.add('half-day');
 
     if (dateStr === todayStr)     tile.classList.add('today');
     else if (date < today)        tile.classList.add('past');
@@ -684,6 +784,7 @@ function renderAllDays() {
 function refreshTile(dateStr) {
   const tile = document.querySelector(`.day-tile[data-ds="${dateStr}"]`);
   if (!tile) return;
+
   const hasDot = tile.querySelector('.log-dot');
   const hasLog = !!getLog(dateStr).trim();
   if (hasLog && !hasDot) {
@@ -693,6 +794,11 @@ function refreshTile(dateStr) {
   } else if (!hasLog && hasDot) {
     hasDot.remove();
   }
+
+  tile.classList.remove('holiday', 'half-day');
+  const type = loadTypes()[dateStr];
+  if (type === 'holiday')  tile.classList.add('holiday');
+  else if (type === 'half') tile.classList.add('half-day');
 }
 
 // ────────────────────────────────────────────────────────
@@ -709,8 +815,19 @@ function openModal(dateStr, dayNum, date) {
     `${fmtLong(date)}  ·  ${remaining} day${remaining !== 1 ? 's' : ''} remaining`;
   document.getElementById('sheet-textarea').value = getLog(dateStr);
 
+  const currentType = loadTypes()[dateStr] || 'normal';
+  document.querySelectorAll('#modal-overlay .type-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.type === currentType);
+  });
+
   document.getElementById('modal-overlay').classList.add('open');
   setTimeout(() => document.getElementById('sheet-textarea').focus(), 280);
+}
+
+function setSheetType(type) {
+  document.querySelectorAll('#modal-overlay .type-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.type === type);
+  });
 }
 
 function closeModal() {
@@ -727,6 +844,10 @@ function saveSheetLog() {
   if (!activeDate) return;
   const text = document.getElementById('sheet-textarea').value;
   saveLog(activeDate, text);
+
+  const activeTypeBtn = document.querySelector('#modal-overlay .type-btn.active');
+  if (activeTypeBtn) saveType(activeDate, activeTypeBtn.dataset.type);
+
   refreshTile(activeDate);
 
   // sync Today view if the sheet was for today
