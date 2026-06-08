@@ -116,6 +116,95 @@
     }
     .badge-tbd { color: #9ca3af; font-size: 0.8rem; font-style: italic; }
 
+    .tabs {
+      display: flex;
+      gap: 0.25rem;
+      border-bottom: 2px solid #e5e7eb;
+      margin-bottom: 1.5rem;
+    }
+    .tab {
+      background: none;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #6b7280;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab:hover { color: #1a1a2e; }
+    .tab.active { color: #4f46e5; border-bottom-color: #4f46e5; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .chip {
+      display: inline-block;
+      background: #eef2ff;
+      color: #4338ca;
+      border: 1px solid #c7d2fe;
+      border-radius: 999px;
+      padding: 0.15rem 0.6rem;
+      font-size: 0.8rem;
+      margin: 0.1rem 0.25rem 0.1rem 0;
+      white-space: nowrap;
+    }
+    .chip-empty { color: #9ca3af; font-size: 0.82rem; font-style: italic; }
+
+    .host-cell {
+      font-weight: 500;
+    }
+    .host-name { color: #1a1a2e; }
+    .host-empty {
+      color: #9ca3af;
+      font-style: italic;
+      font-weight: 400;
+    }
+    .link-btn {
+      background: none;
+      border: none;
+      color: #4f46e5;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      margin-left: 0.4rem;
+      text-decoration: underline;
+    }
+    .link-btn:hover { color: #4338ca; }
+
+    .inline-form {
+      display: flex;
+      gap: 0.35rem;
+      align-items: center;
+    }
+    .inline-form input {
+      flex: 1;
+      min-width: 0;
+      padding: 0.35rem 0.6rem;
+      border: 1.5px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-family: inherit;
+      outline: none;
+    }
+    .inline-form input:focus { border-color: #4f46e5; }
+    .inline-form button {
+      padding: 0.35rem 0.7rem;
+      font-size: 0.78rem;
+      border-radius: 6px;
+      border: none;
+      background: #4f46e5;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .inline-form button:hover { background: #4338ca; }
+    .inline-form button:disabled { opacity: 0.55; cursor: not-allowed; }
+
     .state-row td {
       text-align: center;
       padding: 3rem 1rem;
@@ -224,34 +313,66 @@
 <body>
 
 <header>
-  <h1>Demo Day Voting</h1>
-  <p>Upvote the topics you want to see. Add your own if you have something to share.</p>
+  <h1>Demo Day</h1>
+  <p>Upvote topics, or sign up to present on an upcoming demo day.</p>
 </header>
 
 <main>
-  <div class="toolbar">
-    <span id="topic-count">Loading…</span>
-    <button class="btn btn-primary" id="open-modal-btn">+ Add Topic</button>
+  <div class="tabs" role="tablist">
+    <button class="tab active" id="tab-topics"   role="tab" aria-selected="true"  data-panel="panel-topics">Topics</button>
+    <button class="tab"        id="tab-schedule" role="tab" aria-selected="false" data-panel="panel-schedule">Schedule</button>
   </div>
 
-  <div class="table-wrapper">
-    <table id="topics-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Topic</th>
-          <th class="hide-mobile">Seed Idea</th>
-          <th>Date</th>
-          <th>Votes</th>
-        </tr>
-      </thead>
-      <tbody id="topics-tbody">
-        <tr class="state-row">
-          <td colspan="5"><span class="spinner"></span> Loading topics…</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <section class="tab-panel active" id="panel-topics" role="tabpanel" aria-labelledby="tab-topics">
+    <div class="toolbar">
+      <span id="topic-count">Loading…</span>
+      <button class="btn btn-primary" id="open-modal-btn">+ Add Topic</button>
+    </div>
+
+    <div class="table-wrapper">
+      <table id="topics-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Topic</th>
+            <th class="hide-mobile">Seed Idea</th>
+            <th>Date</th>
+            <th>Votes</th>
+          </tr>
+        </thead>
+        <tbody id="topics-tbody">
+          <tr class="state-row">
+            <td colspan="5"><span class="spinner"></span> Loading topics…</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="tab-panel" id="panel-schedule" role="tabpanel" aria-labelledby="tab-schedule">
+    <div class="toolbar">
+      <span id="schedule-count">Loading…</span>
+      <button class="btn btn-primary" id="open-date-modal-btn">+ Add Date</button>
+    </div>
+
+    <div class="table-wrapper">
+      <table id="schedule-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Host</th>
+            <th>Presenters</th>
+            <th>Sign Up</th>
+          </tr>
+        </thead>
+        <tbody id="schedule-tbody">
+          <tr class="state-row">
+            <td colspan="4"><span class="spinner"></span> Loading schedule…</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </main>
 
 <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -280,6 +401,29 @@
       <div class="form-actions">
         <button type="button" class="btn btn-ghost" id="cancel-btn">Cancel</button>
         <button type="submit" class="btn btn-primary" id="submit-btn">Add Topic</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="date-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="date-modal-title">
+  <div class="modal">
+    <button class="modal-close" id="close-date-modal-btn" aria-label="Close">&times;</button>
+    <h2 id="date-modal-title">Add a Demo Day</h2>
+    <form id="add-date-form" novalidate>
+      <div class="form-group">
+        <label for="date-field-date">Date <span style="color:#dc2626">*</span></label>
+        <input type="date" id="date-field-date" required />
+      </div>
+      <div class="form-group">
+        <label for="date-field-host">Host (optional)</label>
+        <input type="text" id="date-field-host" placeholder="Who's hosting this one?" />
+        <p class="form-hint">Can be set or changed later.</p>
+      </div>
+      <div class="form-error" id="date-form-error"></div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" id="date-cancel-btn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="date-submit-btn">Add Date</button>
       </div>
     </form>
   </div>
@@ -497,6 +641,206 @@ function showToast(msg, isError = false) {
   toast.className = 'show' + (isError ? ' is-error' : '');
   toastTimer = setTimeout(() => { toast.className = ''; }, 3000);
 }
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+let scheduleLoaded = false;
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    document.getElementById(tab.dataset.panel).classList.add('active');
+
+    if (tab.dataset.panel === 'panel-schedule' && !scheduleLoaded) {
+      loadSchedule();
+    }
+  });
+});
+
+// ── SCHEDULE: API ─────────────────────────────────────────────────────────────
+async function fetchSchedule() {
+  const res = await fetch(`${APPS_SCRIPT_URL}?action=getSchedule`);
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data.schedule;
+}
+
+// ── SCHEDULE: RENDER ──────────────────────────────────────────────────────────
+function renderSchedule(list) {
+  const tbody   = document.getElementById('schedule-tbody');
+  const counter = document.getElementById('schedule-count');
+
+  if (!list || list.length === 0) {
+    tbody.innerHTML = '<tr class="state-row"><td colspan="4">No dates scheduled yet — add the first one!</td></tr>';
+    counter.textContent = '0 dates';
+    return;
+  }
+
+  counter.textContent = `${list.length} date${list.length === 1 ? '' : 's'}`;
+
+  tbody.innerHTML = list.map(row => {
+    const presenters = (row.presenters || []).map(n => `<span class="chip">${escHtml(n)}</span>`).join('')
+      || '<span class="chip-empty">No presenters yet</span>';
+
+    const hostHtml = row.host && row.host.trim()
+      ? `<span class="host-name">${escHtml(row.host)}</span>
+         <button class="link-btn" onclick="handleSetHost('${escHtml(row.id)}', this)">edit</button>`
+      : `<span class="host-empty">No host</span>
+         <button class="link-btn" onclick="handleSetHost('${escHtml(row.id)}', this)">set host</button>`;
+
+    return `
+      <tr>
+        <td>${formatDate(row.date)}</td>
+        <td class="host-cell" id="host-${row.id}">${hostHtml}</td>
+        <td id="presenters-${row.id}">${presenters}</td>
+        <td>
+          <form class="inline-form" onsubmit="handleAddPresenter(event, '${escHtml(row.id)}')">
+            <input type="text" placeholder="Your name" required />
+            <button type="submit">Add me</button>
+          </form>
+        </td>
+      </tr>`;
+  }).join('');
+}
+
+// ── SCHEDULE: ACTIONS ─────────────────────────────────────────────────────────
+async function handleAddPresenter(event, scheduleId) {
+  event.preventDefault();
+  const form  = event.target;
+  const input = form.querySelector('input');
+  const btn   = form.querySelector('button');
+  const name  = input.value.trim();
+  if (!name) return;
+
+  btn.disabled = true;
+  btn.textContent = '…';
+
+  try {
+    const result = await apiPost({ action: 'addPresenter', schedule_id: scheduleId, name });
+    if (result.success) {
+      const cell = document.getElementById(`presenters-${scheduleId}`);
+      const empty = cell.querySelector('.chip-empty');
+      if (empty) empty.remove();
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = name;
+      cell.appendChild(chip);
+      input.value = '';
+      showToast('Signed up!');
+    } else {
+      showToast('Could not add — please try again.', true);
+    }
+  } catch (err) {
+    console.error('Add presenter error:', err);
+    showToast(`Error: ${err.message}`, true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Add me';
+  }
+}
+
+async function handleSetHost(scheduleId, linkEl) {
+  const current = linkEl.parentElement.querySelector('.host-name');
+  const existing = current ? current.textContent : '';
+  const name = prompt('Host name (leave blank to clear):', existing);
+  if (name === null) return;
+  const trimmed = name.trim();
+
+  try {
+    const result = await apiPost({ action: 'setHost', schedule_id: scheduleId, host: trimmed });
+    if (result.success) {
+      const cell = document.getElementById(`host-${scheduleId}`);
+      cell.innerHTML = trimmed
+        ? `<span class="host-name">${escHtml(trimmed)}</span>
+           <button class="link-btn" onclick="handleSetHost('${escHtml(scheduleId)}', this)">edit</button>`
+        : `<span class="host-empty">No host</span>
+           <button class="link-btn" onclick="handleSetHost('${escHtml(scheduleId)}', this)">set host</button>`;
+      showToast(trimmed ? 'Host updated.' : 'Host cleared.');
+    } else {
+      showToast('Could not update host.', true);
+    }
+  } catch (err) {
+    console.error('Set host error:', err);
+    showToast(`Error: ${err.message}`, true);
+  }
+}
+
+// ── SCHEDULE: LOAD ────────────────────────────────────────────────────────────
+async function loadSchedule() {
+  try {
+    renderSchedule(await fetchSchedule());
+    scheduleLoaded = true;
+  } catch (err) {
+    console.error('Schedule load error:', err);
+    document.getElementById('schedule-tbody').innerHTML =
+      '<tr class="state-row"><td colspan="4">Failed to load schedule. Check the Apps Script URL in the page source.</td></tr>';
+    document.getElementById('schedule-count').textContent = '';
+  }
+}
+
+// ── ADD-DATE MODAL ────────────────────────────────────────────────────────────
+const dateOverlay   = document.getElementById('date-modal-overlay');
+const dateFormError = document.getElementById('date-form-error');
+
+function openDateModal()  { dateOverlay.classList.add('open'); document.getElementById('date-field-date').focus(); }
+function closeDateModal() {
+  dateOverlay.classList.remove('open');
+  document.getElementById('add-date-form').reset();
+  dateFormError.classList.remove('visible');
+  const btn = document.getElementById('date-submit-btn');
+  btn.disabled = false;
+  btn.textContent = 'Add Date';
+}
+
+document.getElementById('open-date-modal-btn').addEventListener('click', openDateModal);
+document.getElementById('close-date-modal-btn').addEventListener('click', closeDateModal);
+document.getElementById('date-cancel-btn').addEventListener('click', closeDateModal);
+dateOverlay.addEventListener('click', e => { if (e.target === dateOverlay) closeDateModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && dateOverlay.classList.contains('open')) closeDateModal(); });
+
+document.getElementById('add-date-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  dateFormError.classList.remove('visible');
+
+  const date = document.getElementById('date-field-date').value;
+  const host = document.getElementById('date-field-host').value.trim();
+
+  if (!date) {
+    dateFormError.textContent = 'Date is required.';
+    dateFormError.classList.add('visible');
+    return;
+  }
+
+  const submitBtn = document.getElementById('date-submit-btn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Adding…';
+
+  try {
+    const result = await apiPost({ action: 'addScheduleDate', date, host });
+    if (result.success === false && result.reason === 'date_exists') {
+      dateFormError.textContent = 'That date is already on the schedule.';
+      dateFormError.classList.add('visible');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Add Date';
+      return;
+    }
+    await loadSchedule();
+    closeDateModal();
+    showToast('Date added!');
+  } catch (err) {
+    console.error('Add date error:', err);
+    dateFormError.textContent = `Error: ${err.message}`;
+    dateFormError.classList.add('visible');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Add Date';
+  }
+});
 
 loadTopics();
 </script>
