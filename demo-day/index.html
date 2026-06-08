@@ -141,16 +141,36 @@
     .tab-panel.active { display: block; }
 
     .chip {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
       background: #eef2ff;
       color: #4338ca;
       border: 1px solid #c7d2fe;
       border-radius: 999px;
-      padding: 0.15rem 0.6rem;
+      padding: 0.15rem 0.5rem 0.15rem 0.6rem;
       font-size: 0.8rem;
       margin: 0.1rem 0.25rem 0.1rem 0;
       white-space: nowrap;
     }
+    .chip-x {
+      background: none;
+      border: none;
+      color: #6366f1;
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      padding: 0;
+      width: 1.1rem;
+      height: 1.1rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.1s, color 0.1s;
+    }
+    .chip-x:hover { background: #c7d2fe; color: #312e81; }
+    .chip-x:disabled { opacity: 0.5; cursor: not-allowed; }
     .chip-empty { color: #9ca3af; font-size: 0.82rem; font-style: italic; }
 
     .host-cell {
@@ -685,7 +705,7 @@ function renderSchedule(list) {
   counter.textContent = `${list.length} date${list.length === 1 ? '' : 's'}`;
 
   tbody.innerHTML = list.map(row => {
-    const presenters = (row.presenters || []).map(n => `<span class="chip">${escHtml(n)}</span>`).join('')
+    const presenters = (row.presenters || []).map(n => renderChip(row.id, n)).join('')
       || '<span class="chip-empty">No presenters yet</span>';
 
     const hostHtml = row.host && row.host.trim()
@@ -710,6 +730,42 @@ function renderSchedule(list) {
 }
 
 // ── SCHEDULE: ACTIONS ─────────────────────────────────────────────────────────
+function renderChip(scheduleId, name) {
+  const sidAttr  = escHtml(scheduleId);
+  const nameAttr = escHtml(name).replace(/'/g, '&#39;');
+  return `<span class="chip">${escHtml(name)}<button type="button" class="chip-x" aria-label="Remove ${escHtml(name)}" onclick="handleRemovePresenter('${sidAttr}', '${nameAttr}', this)">&times;</button></span>`;
+}
+
+async function handleRemovePresenter(scheduleId, name, btn) {
+  if (btn.disabled) return;
+  if (!confirm(`Remove ${name} from this date?`)) return;
+
+  btn.disabled = true;
+  const chip = btn.closest('.chip');
+
+  try {
+    const result = await apiPost({ action: 'removePresenter', schedule_id: scheduleId, name });
+    if (result.success) {
+      const cell = chip.parentElement;
+      chip.remove();
+      if (!cell.querySelector('.chip')) {
+        cell.innerHTML = '<span class="chip-empty">No presenters yet</span>';
+      }
+      showToast('Removed.');
+    } else if (result.reason === 'not_found') {
+      chip.remove();
+      showToast('Already gone.', true);
+    } else {
+      btn.disabled = false;
+      showToast('Could not remove — please try again.', true);
+    }
+  } catch (err) {
+    console.error('Remove presenter error:', err);
+    btn.disabled = false;
+    showToast(`Error: ${err.message}`, true);
+  }
+}
+
 async function handleAddPresenter(event, scheduleId) {
   event.preventDefault();
   const form  = event.target;
@@ -727,10 +783,7 @@ async function handleAddPresenter(event, scheduleId) {
       const cell = document.getElementById(`presenters-${scheduleId}`);
       const empty = cell.querySelector('.chip-empty');
       if (empty) empty.remove();
-      const chip = document.createElement('span');
-      chip.className = 'chip';
-      chip.textContent = name;
-      cell.appendChild(chip);
+      cell.insertAdjacentHTML('beforeend', renderChip(scheduleId, name));
       input.value = '';
       showToast('Signed up!');
     } else {

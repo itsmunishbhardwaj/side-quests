@@ -55,6 +55,7 @@ function doPost(e) {
     else if (action === 'addScheduleDate') result = addScheduleDate(body);
     else if (action === 'setHost')         result = setHost(body);
     else if (action === 'addPresenter')    result = addPresenter(body);
+    else if (action === 'removePresenter') result = removePresenter(body);
     else                                   result = { error: 'Unknown action: ' + action };
   } catch (err) {
     result = { error: err.toString() };
@@ -237,4 +238,24 @@ function addPresenter(body) {
 
   getPresentersSheet().appendRow([schedule_id, name, new Date().toISOString()]);
   return { success: true };
+}
+
+// Removes the first matching (schedule_id, name) row. If duplicates exist,
+// the user can click × again — predictable, no surprise mass-delete.
+function removePresenter(body) {
+  var schedule_id = String(body.schedule_id || '').trim();
+  var name        = String(body.name        || '').trim();
+  if (!schedule_id) throw new Error('schedule_id is required');
+  if (!name)        throw new Error('name is required');
+
+  var sheet = getPresentersSheet();
+  var data  = sheet.getDataRange().getValues();
+  for (var i = 1; i < data.length; i++) {
+    if (String(data[i][0]).trim() === schedule_id &&
+        String(data[i][1]).trim() === name) {
+      sheet.deleteRow(i + 1);
+      return { success: true };
+    }
+  }
+  return { success: false, reason: 'not_found' };
 }
