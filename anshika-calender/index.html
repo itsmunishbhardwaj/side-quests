@@ -422,25 +422,29 @@
     .out-of-range h2 { font-size: 1.2rem; color: var(--pink-dark); margin-bottom: 8px; }
     .out-of-range p  { font-size: 0.9rem; line-height: 1.5; }
 
-    /* ── Holiday / Half-day tile colours ── */
+    /* ── Day-type tile colours ── */
     .day-tile.holiday  { background: #c8f0c8; border-color: #81c784; }
     .day-tile.half-day { background: #fff9c4; border-color: #f9a825; }
+    .day-tile.counted  { background: #bbdefb; border-color: #1976d2; }
     .day-tile.today.holiday  { background: #388e3c; box-shadow: 0 2px 10px rgba(56,142,60,0.35); }
     .day-tile.today.half-day { background: #f9a825; box-shadow: 0 2px 10px rgba(249,168,37,0.35); }
+    .day-tile.today.counted  { background: #1976d2; box-shadow: 0 2px 10px rgba(25,118,210,0.35); }
     .day-tile.holiday  .tile-day-num, .day-tile.holiday  .tile-date { color: #1b5e20; }
     .day-tile.half-day .tile-day-num, .day-tile.half-day .tile-date { color: #5d4037; }
+    .day-tile.counted  .tile-day-num, .day-tile.counted  .tile-date { color: #0d47a1; }
     .day-tile.today.holiday  .tile-day-num, .day-tile.today.holiday  .tile-date { color: white; }
     .day-tile.today.half-day .tile-day-num, .day-tile.today.half-day .tile-date { color: white; }
-    .day-tile.holiday .log-dot  { background: #1b5e20; }
+    .day-tile.today.counted  .tile-day-num, .day-tile.today.counted  .tile-date { color: white; }
+    .day-tile.holiday  .log-dot { background: #1b5e20; }
     .day-tile.half-day .log-dot { background: #5d4037; }
+    .day-tile.counted  .log-dot { background: #0d47a1; }
 
     /* ── Day-type selector ── */
     .type-row {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 10px;
       margin-top: 16px;
-      flex-wrap: wrap;
     }
     .type-row-label {
       font-size: 0.75rem;
@@ -448,23 +452,26 @@
       font-weight: 600;
       flex-shrink: 0;
     }
-    .type-btn {
+    .type-select {
       flex: 1;
-      padding: 8px 6px;
+      padding: 10px 32px 10px 12px;
       border-radius: 10px;
       border: 1.5px solid var(--pink-light);
-      background: white;
-      color: var(--text-mid);
-      font-size: 0.78rem;
+      background-color: white;
+      color: var(--text-dark);
+      font-size: 0.85rem;
       font-weight: 600;
+      font-family: inherit;
       cursor: pointer;
-      transition: all 0.15s;
-      white-space: nowrap;
+      outline: none;
       min-width: 0;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%23b0506a' d='M6 8L0 0h12z'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
     }
-    .type-btn.active        { border-color: var(--pink-primary); background: var(--pink-light); color: var(--pink-dark); }
-    .type-btn.holiday.active { border-color: #388e3c; background: #e8f5e9; color: #1b5e20; }
-    .type-btn.half.active    { border-color: #f9a825; background: #fffde7; color: #5d4037; }
+    .type-select:focus { border-color: var(--pink-mid); }
   </style>
 </head>
 <body>
@@ -503,9 +510,12 @@
     <div class="sheet-meta"  id="sheet-meta"></div>
     <div class="type-row">
       <span class="type-row-label">Mark as:</span>
-      <button class="type-btn active" data-type="normal"  onclick="setSheetType('normal')">Normal</button>
-      <button class="type-btn holiday" data-type="holiday" onclick="setSheetType('holiday')">Holiday 🌿</button>
-      <button class="type-btn half"    data-type="half"    onclick="setSheetType('half')">Half Day 🌗</button>
+      <select class="type-select" id="sheet-type-select">
+        <option value="normal">Normal work day</option>
+        <option value="counted">Off — counts toward 182 🌞</option>
+        <option value="holiday">Off — extends end date 🌿</option>
+        <option value="half">Half day 🌗</option>
+      </select>
     </div>
     <textarea class="sheet-textarea" id="sheet-textarea" placeholder="Write your log for this day..."></textarea>
     <div class="sheet-actions">
@@ -562,7 +572,8 @@ function saveType(dateStr, type) {
 }
 
 // Returns effective work-days elapsed up to and including calendarDayNum.
-// Holidays subtract 1, half-days subtract 0.5.
+// `holiday` extends calendar (subtracts 1). `half` subtracts 0.5.
+// `counted` and `normal` count fully — no subtraction.
 function getEffectiveElapsed(calendarDayNum) {
   const types = loadTypes();
   let holidays = 0, halfDays = 0;
@@ -654,9 +665,12 @@ function renderToday() {
       </div>
       <div class="type-row">
         <span class="type-row-label">Today is:</span>
-        <button class="type-btn${todayType==='normal'?' active':''}"           onclick="setTodayType('normal')">Normal</button>
-        <button class="type-btn holiday${todayType==='holiday'?' active':''}"  onclick="setTodayType('holiday')">Holiday 🌿</button>
-        <button class="type-btn half${todayType==='half'?' active':''}"        onclick="setTodayType('half')">Half Day 🌗</button>
+        <select class="type-select" id="today-type-select" onchange="setTodayType(this.value)">
+          <option value="normal"  ${todayType==='normal'  ? 'selected' : ''}>Normal work day</option>
+          <option value="counted" ${todayType==='counted' ? 'selected' : ''}>Off — counts toward 182 🌞</option>
+          <option value="holiday" ${todayType==='holiday' ? 'selected' : ''}>Off — extends end date 🌿</option>
+          <option value="half"    ${todayType==='half'    ? 'selected' : ''}>Half day 🌗</option>
+        </select>
       </div>
     </div>
 
@@ -752,8 +766,9 @@ function renderAllDays() {
     tile.className = 'day-tile';
     tile.dataset.ds = dateStr;
 
-    if (types[dateStr] === 'holiday')  tile.classList.add('holiday');
-    else if (types[dateStr] === 'half') tile.classList.add('half-day');
+    if (types[dateStr] === 'holiday')      tile.classList.add('holiday');
+    else if (types[dateStr] === 'half')    tile.classList.add('half-day');
+    else if (types[dateStr] === 'counted') tile.classList.add('counted');
 
     if (dateStr === todayStr)     tile.classList.add('today');
     else if (date < today)        tile.classList.add('past');
@@ -795,10 +810,11 @@ function refreshTile(dateStr) {
     hasDot.remove();
   }
 
-  tile.classList.remove('holiday', 'half-day');
+  tile.classList.remove('holiday', 'half-day', 'counted');
   const type = loadTypes()[dateStr];
-  if (type === 'holiday')  tile.classList.add('holiday');
-  else if (type === 'half') tile.classList.add('half-day');
+  if (type === 'holiday')      tile.classList.add('holiday');
+  else if (type === 'half')    tile.classList.add('half-day');
+  else if (type === 'counted') tile.classList.add('counted');
 }
 
 // ────────────────────────────────────────────────────────
@@ -816,18 +832,10 @@ function openModal(dateStr, dayNum, date) {
   document.getElementById('sheet-textarea').value = getLog(dateStr);
 
   const currentType = loadTypes()[dateStr] || 'normal';
-  document.querySelectorAll('#modal-overlay .type-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.type === currentType);
-  });
+  document.getElementById('sheet-type-select').value = currentType;
 
   document.getElementById('modal-overlay').classList.add('open');
   setTimeout(() => document.getElementById('sheet-textarea').focus(), 280);
-}
-
-function setSheetType(type) {
-  document.querySelectorAll('#modal-overlay .type-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.type === type);
-  });
 }
 
 function closeModal() {
@@ -845,8 +853,8 @@ function saveSheetLog() {
   const text = document.getElementById('sheet-textarea').value;
   saveLog(activeDate, text);
 
-  const activeTypeBtn = document.querySelector('#modal-overlay .type-btn.active');
-  if (activeTypeBtn) saveType(activeDate, activeTypeBtn.dataset.type);
+  const selectedType = document.getElementById('sheet-type-select').value;
+  saveType(activeDate, selectedType);
 
   refreshTile(activeDate);
 
