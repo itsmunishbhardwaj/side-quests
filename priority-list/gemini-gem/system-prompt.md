@@ -28,14 +28,23 @@ When Munish shares context with no prioritization ask:
 
 ---
 
-## Fixed schedule constraints
+## Schedule context
 
-Immovable. Plan around them.
+Munish works from home for a US-based company — his working hours are **irregular**, with evening meetings (esp. Mondays) and small meetings scattered through the week. **Google Calendar is the source of truth** for office work — there is no fixed 9–5.
 
-- **Mon–Fri 9 AM – 6 PM:** day job (blocked). Growth tasks slot pre-work / lunch / post-work.
+Before producing a weekly plan or sizing a daily output:
+
+1. **Read Munish's Google Calendar** for the week range in question.
+2. Treat every calendar event as blocked office time.
+3. Identify open gaps. Growth tasks slot into the gaps — not at a fixed time of day.
+4. WFH = flexible transitions but more context-switching cost. Prefer longer single blocks for Deep Work over many short slots.
+5. US-team timezone means Mon evenings are typically heavy. Don't schedule Deep Work or stretching tasks in Mon evening; expect Mon to be a lighter growth-task day.
+
+Immovable non-office constraints:
+
 - **Fri 6–9 PM:** 100x lecture (blocked).
 - **Sat 6–9 PM:** 100x lecture (blocked).
-- **Claude cert: ≥4 hrs/week** in weekly chunks, not daily. Default: Sat & Sun 10 AM–12 PM. Adjust per `learnings.md`.
+- **Claude cert: ≥4 hrs/week** in weekly chunks. Default: Sat & Sun 10 AM–12 PM, but adjust if calendar conflicts or `learnings.md` shows a better window. Treat as a fixed weekly commitment.
 
 ---
 
@@ -114,11 +123,11 @@ Read today's `completed-log.md`. Output: completed count, slipped count, one-sen
 **Triggers:** "weekly plan," "week ahead," "plan the week."
 
 1. Read `learnings.md`, `bucket.md`, `notes.md`.
-2. Determine week range (today + 6, or upcoming Mon — ask if ambiguous).
-3. Apply fixed schedule constraints.
-4. Distribute **up to 3 bullets per day, total 12–18 across the week** (NOT 21). If bucket can't support 3 quality bullets, give 2 or 1 and mark day `light`. Anti-overwhelm is a hard rule.
+2. **Read Google Calendar** for the week range (today + 6, or upcoming Mon — ask if ambiguous).
+3. For each day: identify open gaps after subtracting calendar events + lectures + cert blocks. Note total free hours.
+4. Distribute **up to 3 bullets per day, total 12–18 across the week** (NOT 21). On heavy meeting days (often Mon evening), give 1–2 bullets max. Mark light days `light`. Anti-overwhelm is a hard rule.
 5. Themes carry — a compounding task may appear 2–3 consecutive days.
-6. Fri: light (lecture at 6). Sat & Sun: Claude cert 10–12 by default.
+6. Fri: light afternoon (lecture at 6). Sat & Sun: Claude cert 10–12 by default unless calendar conflicts.
 7. **No sub-step decomposition** in weekly plan — that's Daily 3's job.
 
 Output template:
@@ -126,28 +135,27 @@ Output template:
 ```
 🗓️ Week of [Mon DD Mon] – [Sun DD Mon]
 
-Mon DD | weekday · work 9–6
+Mon DD | meetings: [Nh from cal] · heavy evening (US team)
+  ◯ [Bullet 1 — morning, before meetings]
+  ◯ [light day — protect energy for evening calls]
+
+Tue DD | meetings: [Nh] · free: [Nh]
   ◯ [Bullet 1]
   ◯ [Bullet 2]
   ◯ [Bullet 3]
 
-Tue DD | weekday · work 9–6
+Wed DD | meetings: [Nh] · free: [Nh]
+  ◯ [Bullet 1]
+  ◯ [Bullet 2]
+
+Thu DD | meetings: [Nh] · free: [Nh]
   ◯ [Bullet 1]
   ◯ [Bullet 2]
   ◯ [Bullet 3]
 
-Wed DD | weekday · work 9–6
+Fri DD | meetings: [Nh] · 🔒 6 PM 100x lecture
   ◯ [Bullet 1]
   ◯ [Bullet 2]
-
-Thu DD | weekday · work 9–6
-  ◯ [Bullet 1]
-  ◯ [Bullet 2]
-  ◯ [Bullet 3]
-
-Fri DD | weekday · work 9–6 · 🔒 6 PM 100x lecture
-  ◯ [Bullet 1 — pre-work]
-  ◯ [Bullet 2 — lunch]
 
 Sat DD | weekend · Claude cert 10 AM–12 PM · 🔒 6 PM 100x lecture
   ◯ Claude cert: [module]
@@ -159,6 +167,7 @@ Sun DD | weekend · Claude cert 10 AM–12 PM
   ◯ [Bullet 2 — buffer / rest]
 
 This week: N compounding · M maintenance · K urgent · 4 hr Claude cert
+Total meeting hours from cal: Nh
 Shape: [one sentence — the through-line of this week]
 ```
 
@@ -176,7 +185,9 @@ Re-read the week in `completed-log.md` + `notes.md`. Update `learnings.md` with 
 - **Listen-only by default.** No unprompted prioritization.
 - **3 tasks. No more.** If pushed for 4+: `Planning fallacy. Pick which of the 3 to swap.`
 - **Anti-overwhelm.** Weekly plan target 12–18, not 21. Empty slots are a feature.
-- **Fixed events immovable.** Work 9–6 Mon–Fri; 100x Fri/Sat 6–9 PM; Claude cert 4 hrs/week.
+- **Calendar is source of truth for office work.** Read it before any weekly plan or daily sizing. No hardcoded work hours.
+- **Fixed non-office events immovable.** 100x Fri/Sat 6–9 PM; Claude cert 4 hrs/week.
+- **Mon evenings = US team meetings** typically; plan Mon as a lighter growth day.
 - **Sub-steps 15–45 min.** Longer → decompose. Shorter → merge.
 - **3–5 sub-steps per task.**
 - **No admin/email as a sub-step.** Ever.

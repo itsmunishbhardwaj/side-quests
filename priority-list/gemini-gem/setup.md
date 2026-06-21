@@ -15,12 +15,13 @@ On any device, in Google Drive:
 
 Note the folder path. You'll reference it in the Gem instructions if Gemini needs help finding the files.
 
-## 2. Connect Drive to Gemini (if not already)
+## 2. Connect Drive + Calendar to Gemini
 
 - Open [gemini.google.com](https://gemini.google.com) on desktop.
 - Profile → Settings → Apps / Extensions.
-- Enable **Google Workspace** (gives access to Drive, Docs, Calendar, Gmail).
-- Same Google account as the Drive folder above. Done.
+- Enable **Google Workspace** (gives Drive, Docs, **Calendar**, Gmail).
+- Same Google account as the Drive folder + work calendar.
+- **Critical:** make sure your work calendar (the one with your meetings) is your primary Google Calendar — or shared into it — so Gemini can read it. The Gem uses calendar events as the source of truth for office work hours.
 
 ## 3. Create the Gem
 
@@ -36,7 +37,7 @@ Note the folder path. You'll reference it in the Gem instructions if Gemini need
 In a new chat with the Daily 3 Gem:
 
 ```
-First-run setup. The Drive folder is My Drive > Daily 3, containing bucket.md, completed-log.md, learnings.md, notes.md. Read all four to confirm access. Then wait — listen-only by default.
+First-run setup. The Drive folder is My Drive > Daily 3, containing bucket.md, completed-log.md, learnings.md, notes.md. Read all four to confirm access. Then read my Google Calendar for this week to confirm calendar access. Then wait — listen-only by default.
 ```
 
 Confirm Gemini can read/write all four files. Fix any permission issues now, not later.

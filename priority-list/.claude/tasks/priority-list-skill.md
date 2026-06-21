@@ -25,14 +25,16 @@ A phone-first prioritizer that turns a weekly task dump (photo / screenshot / PD
 
 **Default behavior is listen-only.** Gemini only produces prioritized output (Daily 3, weekly plan, evening wrap, weekly review) on explicit trigger. Otherwise it routes incoming context to `bucket.md` / `learnings.md` / `notes.md` and acknowledges in one line.
 
-## Fixed schedule constraints
+## Schedule context
 
-Baked into the weekly plan and respected in all sizing:
+Munish is WFH for a US-based company — work hours are irregular, Mon evenings typically heavy with US-team meetings, small meetings scattered through the week. **Google Calendar is the source of truth** for office work, not hardcoded hours. Gem reads the calendar before any weekly plan or daily sizing.
 
-- Work hours: Mon–Fri 9 AM – 6 PM (day job, blocked)
+Fixed non-office constraints (baked into weekly plan):
+
 - Fri 6 PM – 9 PM: 100x lecture (blocked)
 - Sat 6 PM – 9 PM: 100x lecture (blocked)
-- Claude certification: ≥4 hrs/week in weekly chunks (default Sat & Sun 10 AM – 12 PM)
+- Claude certification: ≥4 hrs/week in weekly chunks (default Sat & Sun 10 AM – 12 PM, adjusts to calendar)
+- Mon evening typically heavy → planned as a lighter growth day
 
 ## Prioritization algorithm
 
