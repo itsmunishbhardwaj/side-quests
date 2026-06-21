@@ -23,13 +23,22 @@ Note the folder path. You'll reference it in the Gem instructions if Gemini need
 - Same Google account as the Drive folder + work calendar.
 - **Critical:** make sure your work calendar (the one with your meetings) is your primary Google Calendar — or shared into it — so Gemini can read it. The Gem uses calendar events as the source of truth for office work hours.
 
+## 2b. Create a dedicated `Daily 3` calendar
+
+This is the calendar Gemini writes weekly-plan events to — separate from your work calendar so it stays clean and you can hide it any time.
+
+- Open [calendar.google.com](https://calendar.google.com) → left sidebar → **Other calendars** → ➕ → **Create new calendar**.
+- Name: `Daily 3`. Description optional. Time zone: yours.
+- Save. It appears under "My calendars" in the sidebar.
+- Tip: pick a default color you can recognize at a glance (events get tag-specific colors when Gemini creates them, but this is the calendar's fallback).
+
 ## 3. Create the Gem
 
 - In Gemini web: left sidebar → **Gems** → **+ New Gem**.
 - **Name:** `Daily 3`
 - **Description:** `Phone-first daily prioritizer. Reads bucket, returns 3 tasks with achievable sub-steps.`
 - **Instructions:** paste the entire contents of `gemini-gem/system-prompt.md` from this repo.
-- **Knowledge files:** upload **both** `gemini-gem/framework.md` and `gemini-gem/weekly-png-renderer.py` from this repo.
+- **Knowledge files:** upload `gemini-gem/framework.md` from this repo.
 - Save.
 
 ## 4. First run (web, 5 min)
@@ -68,11 +77,11 @@ Weekly plan.
 ```
 Text chart for Mon–Sun with 3 (or fewer) bullets per day, work hours pulled from your Google Calendar, 100x lectures pinned Fri/Sat 6 PM, 4 hrs Claude cert on weekend mornings.
 
-For a shareable PNG version (Claude cream + orange palette):
+To put the week on your phone calendar (visual + interactive):
 ```
-Weekly plan as png.
+Weekly plan to calendar.
 ```
-Adds ~10 sec while Gemini's code execution renders the image. Output appears in chat — tap to save.
+Adds each bullet as a color-coded event on a dedicated `Daily 3` calendar. Open Calendar app to see the week. Re-running clears old events first.
 
 **Each morning — sharpen the day:**
 ```

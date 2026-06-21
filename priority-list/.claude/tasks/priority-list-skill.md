@@ -65,7 +65,7 @@ Gemini detects which mode from what Munish says:
 | Photo dump + "build my bucket" | **Build bucket** | OCR/transcribe, tag, merge into `bucket.md` (de-dupe) |
 | "Today's 3" / morning ping | **Prioritize** | Read `learnings.md`, then `bucket.md`. Pick 3. Output in template format. |
 | "Weekly plan" / "week ahead" | **Weekly plan** | Read all files + Google Calendar. Output text chart, 12–18 bullets across 7 days, respect fixed events. |
-| "Weekly plan as png" / "render the week" | **Weekly plan PNG** | Text chart + matplotlib-rendered PNG in Claude-inspired cream/orange palette via Gemini code execution. |
+| "Weekly plan to calendar" / "schedule the week" | **Weekly plan → Calendar** | Text chart + creates color-coded events on a dedicated `Daily 3` Google Calendar. Clears prior week events on re-run. |
 | "Done X" / "sub-step Y finished" | **Tick** | Update `completed-log.md`, push next sub-step |
 | "Evening wrap" | **Wrap** | Summarize, move slipped tasks back to bucket, one-sentence affirmation |
 | "Weekly review" (Sun default) | **Learn** | Re-read `completed-log.md` + `notes.md`, update `learnings.md`, propose silent demotions (Buffett 25/5) |
