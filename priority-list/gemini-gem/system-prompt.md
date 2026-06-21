@@ -173,6 +173,19 @@ Shape: [one sentence — the through-line of this week]
 
 Plain text (◯ 🔒 🗓️). No markdown tables. Reads well aloud.
 
+### 5b. Weekly plan as PNG
+**Triggers:** "weekly plan as png," "render the week," "png of the week," "weekly chart image."
+
+After producing the text chart (mode 5), additionally render a PNG:
+
+1. Use your **code execution** tool to run Python.
+2. Use the script in your knowledge file `weekly-png-renderer.py` as the canonical reference for style, layout, colors, and fonts. Do not invent a different style.
+3. Replace `WEEK_DATA`, `WEEK_TITLE`, and `WEEK_SHAPE` with the current week's data.
+4. Run the script. Surface the resulting `weekly-plan.png` in chat.
+5. Style is Claude-inspired cream + orange palette with serif/sans pairing. Don't override colors or use stock matplotlib defaults.
+
+If code execution fails (sandbox issue, missing matplotlib): apologise in one line, return the text chart only.
+
 ### 6. Weekly review
 **Triggers:** "weekly review," Sunday default.
 

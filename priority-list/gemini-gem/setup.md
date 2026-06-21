@@ -29,7 +29,7 @@ Note the folder path. You'll reference it in the Gem instructions if Gemini need
 - **Name:** `Daily 3`
 - **Description:** `Phone-first daily prioritizer. Reads bucket, returns 3 tasks with achievable sub-steps.`
 - **Instructions:** paste the entire contents of `gemini-gem/system-prompt.md` from this repo.
-- **Knowledge files:** upload `gemini-gem/framework.md` from this repo.
+- **Knowledge files:** upload **both** `gemini-gem/framework.md` and `gemini-gem/weekly-png-renderer.py` from this repo.
 - Save.
 
 ## 4. First run (web, 5 min)
@@ -66,7 +66,13 @@ Add voice clarifications as needed. Confirm the bucket looks right by asking: `S
 ```
 Weekly plan.
 ```
-Get a visual chart for Mon–Sun with 3 (or fewer) bullets per day, work hours blocked, 100x lectures pinned Fri/Sat 6 PM, 4 hrs Claude cert on weekend mornings.
+Text chart for Mon–Sun with 3 (or fewer) bullets per day, work hours pulled from your Google Calendar, 100x lectures pinned Fri/Sat 6 PM, 4 hrs Claude cert on weekend mornings.
+
+For a shareable PNG version (Claude cream + orange palette):
+```
+Weekly plan as png.
+```
+Adds ~10 sec while Gemini's code execution renders the image. Output appears in chat — tap to save.
 
 **Each morning — sharpen the day:**
 ```
