@@ -2,15 +2,19 @@
 
 ## Open
 
-<!-- Format: - [tag] task description (added YYYY-MM-DD, re-added N times)
-     Tags: compounding | maintenance | urgent | office
-     Example:
-     - [compounding] Ship Figma dashboard rebuild to beta users (added 2026-06-21)
+<!-- Format: - [tag · kind] description (added YYYY-MM-DD, re-added N times)
+     Tags:  compounding | maintenance | urgent | office
+     Kinds: op   = multi-step Operation, needs OPT decomposition
+            task = already actionable, no OPT needed
+     Examples:
+     - [compounding · op] Ship Figma dashboard rebuild to beta users (added 2026-06-21)
+     - [compounding · task] Email Priya the v2 spec (added 2026-06-21)
+     - [maintenance · task] Renew car insurance (added 2026-06-21)
 -->
 
 ## In flight
 
-<!-- Tasks Gemini has selected for today's 3. Moved here on "Today's 3".
+<!-- Items Gemini has selected for today's 3. Moved here on "Today's 3".
      Moved back to Open on Evening wrap if not completed. -->
 
 ## Demoted

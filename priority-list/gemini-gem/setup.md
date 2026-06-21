@@ -7,8 +7,9 @@ Phone-first usage, but easier to set up on web. After setup, everything works fr
 On any device, in Google Drive:
 
 1. Create a folder named `Daily 3` (root of My Drive is fine).
-2. Inside it, create four docs by uploading or pasting the templates from `drive-templates/` in this repo:
+2. Inside it, create five docs by uploading or pasting the templates from `drive-templates/` in this repo:
    - `bucket.md`
+   - `operations.md`
    - `completed-log.md`
    - `learnings.md`
    - `notes.md`
@@ -46,7 +47,7 @@ This is the calendar Gemini writes weekly-plan events to — separate from your 
 In a new chat with the Daily 3 Gem:
 
 ```
-First-run setup. The Drive folder is My Drive > Daily 3, containing bucket.md, completed-log.md, learnings.md, notes.md. Read all four to confirm access. Then read my Google Calendar for this week to confirm calendar access. Then wait — listen-only by default.
+First-run setup. The Drive folder is My Drive > Daily 3, containing bucket.md, operations.md, completed-log.md, learnings.md, notes.md. Read all five to confirm access. Then read my Google Calendar for this week to confirm calendar access. Then wait — listen-only by default.
 ```
 
 Confirm Gemini can read/write all four files. Fix any permission issues now, not later.
@@ -83,11 +84,21 @@ Weekly plan to calendar.
 ```
 Adds each bullet as a color-coded event on a dedicated `Daily 3` calendar. Open Calendar app to see the week. Re-running clears old events first.
 
+**When a goal needs to be broken down — OPT it:**
+```
+OPT [name of bucket item].
+```
+or
+```
+OPT my bucket.
+```
+Decomposes each Operation (bucket item) into 2–5 Processes (state-named workstreams) and 3–7 Tasks per Process (rolling-wave — only next ~2 weeks decomposed). Written to `operations.md`. Daily 3 then pulls sub-steps from current active Tasks instead of improvising.
+
 **Each morning — sharpen the day:**
 ```
 Today's 3.
 ```
-Returns 2 needle-movers + 1 urgent, with sub-steps and a Zeigarnik primer.
+Returns 2 needle-movers + 1 urgent, with sub-steps and a Zeigarnik primer. Pulls from OPT'd Tasks when the picked Operation is decomposed.
 
 **Throughout the day — tick:**
 ```

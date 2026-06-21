@@ -136,6 +136,39 @@ Start here: Figma file open, dashboard frame duplicated.
 
 ---
 
+## OPT (Operation → Process → Task)
+
+OPT is **not** a canonical framework — it's Munish's personal synthesis. The closest established cousins, which OPT borrows from:
+
+- **WBS (PMBOK):** Project → Deliverable → Work Package → Activity. OPT mirrors the 3-level structure, oriented around workstreams instead of deliverables. The **100% rule** (children fully cover the parent, no overlap) and **mutually-exclusive** decomposition come from here.
+- **GTD Natural Planning (Allen):** Always pin **Purpose + Successful Outcome** before decomposing. Tasks without a stated outcome become activity theater. The **next-action test** (verb + concrete object + visible completion) is GTD's load-bearing heuristic.
+- **OKRs (Doerr / Grove):** Separate **outcome from output**. A Process is a measurable state-change, not an activity bucket. ("Hiring funnel filled" > "Recruiting work.")
+- **HTA (Annett & Duncan, 1967):** Stopping rule — decompose until the next layer is "obvious to the doer," no further.
+- **Locke & Latham goal-setting theory:** Specificity + difficulty drive performance. Vague Operations are the upstream cause of fake-work Tasks.
+- **JTBD (Christensen):** Ask what *job* the Operation is hired to do. Filters out Operations that are actually solutions in disguise.
+
+### Right-sizing bands
+
+- **Process:** 3 days–3 weeks elapsed (sweet spot ~1 week). Shorter = it's a Task. Longer = it's another Operation.
+- **Task:** half-day to 2 days of focused work. Matches agile story sizing and WBS work-package lower-end practice.
+- **Processes per Operation:** 2–5. Below 2 = Operation is itself a Process. Above 5 = premature decomposition or Operation is multi-quarter.
+- **Tasks per Process:** 3–7.
+- **Depth:** 3 levels (Operation / Process / Task). Sub-steps in Daily 3 sit *below* Task — they're generated each morning, not stored.
+
+### Failure modes to actively prevent
+
+- **Fake-work / activity theater** (Drucker): tasks that check off easily but don't move the Operation. Every Task must name which Process it advances.
+- **Over-decomposition** (planning fallacy, Kahneman & Tversky): detailed plans feel like progress, crowd out execution. Hard cap on depth + breadth.
+- **Under-decomposition:** "do the thing" Tasks fail next-action test. Verb-led, concrete-object Tasks only.
+- **Premature decomposition:** later Processes' shape will change after earlier ones complete. **Rolling-wave planning** — decompose only the next ~2 weeks; defer the rest.
+- **Process-as-action confusion:** "Meet with X" is a step, not a Process. Process names describe a *state*.
+
+### Worked example — Operation OPT'd
+
+See `drive-templates/operations.md` for the canonical example ("Ship Figma dashboard rebuild to beta users"), demonstrating: outcome test, JTBD line, four Processes (two decomposed under rolling wave, two deferred), Tasks sized half-day to 1 day, verb-led with concrete objects.
+
+---
+
 ## What this skill is NOT
 
 - Not a calendar. It doesn't schedule. (Future scope.)

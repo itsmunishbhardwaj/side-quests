@@ -14,11 +14,12 @@ A phone-first prioritizer that turns a weekly task dump (photo / screenshot / PD
 
 ## Architecture
 
-**One Gem** (`Daily 3`) + **one Google Drive folder** (`/Daily 3/`) containing four files Gemini reads and writes:
+**One Gem** (`Daily 3`) + **one Google Drive folder** (`/Daily 3/`) containing five files Gemini reads and writes:
 
 | File | Purpose | Writer |
 |---|---|---|
-| `bucket.md` | All open tasks, tagged `compounding` / `maintenance` / `urgent` / `office` | Gemini, every interaction |
+| `bucket.md` | All open items (Operations + Tasks), tagged `compounding` / `maintenance` / `urgent` / `office` and kinded `op` (needs OPT) or `task` (already actionable) | Gemini, every interaction |
+| `operations.md` | OPT decomposition: each Operation → 2–5 Processes (state-named) → 3–7 Tasks (rolling-wave, next ~2 weeks) | Gemini, on OPT trigger |
 | `completed-log.md` | Timestamped completion history (task + sub-step level) | Gemini, on each tick |
 | `learnings.md` | Patterns Gemini observes about Munish (time-of-day, tag-completion rates, avoidance, etc.) | Gemini, weekly review |
 | `notes.md` | Ambient context drops Munish shares without an explicit prioritization ask | Gemini, listen-only mode |
@@ -63,7 +64,8 @@ Gemini detects which mode from what Munish says:
 |---|---|---|
 | Anything else (default) | **Listen** | Route to `bucket.md` / `learnings.md` / `notes.md`. One-line ack. No suggestions. |
 | Photo dump + "build my bucket" | **Build bucket** | OCR/transcribe, tag, merge into `bucket.md` (de-dupe) |
-| "Today's 3" / morning ping | **Prioritize** | Read `learnings.md`, then `bucket.md`. Pick 3. Output in template format. |
+| "OPT [name]" / "OPT my bucket" | **OPT decompose** | Operation → Processes (state-named noun phrases, 100% rule) → Tasks (next-action, half-day to 2 days). Rolling-wave: next ~2 weeks only. Written to `operations.md`. |
+| "Today's 3" / morning ping | **Prioritize** | Read `learnings.md`, `bucket.md`, `operations.md`. Pick 3. Sub-steps generated from current active Tasks if OPT'd, otherwise improvised. |
 | "Weekly plan" / "week ahead" | **Weekly plan** | Read all files + Google Calendar. Output text chart, 12–18 bullets across 7 days, respect fixed events. |
 | "Weekly plan to calendar" / "schedule the week" | **Weekly plan → Calendar** | Text chart + creates color-coded events on a dedicated `Daily 3` Google Calendar. Clears prior week events on re-run. |
 | "Done X" / "sub-step Y finished" | **Tick** | Update `completed-log.md`, push next sub-step |
