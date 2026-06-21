@@ -14,13 +14,25 @@ A phone-first prioritizer that turns a weekly task dump (photo / screenshot / PD
 
 ## Architecture
 
-**One Gem** (`Daily 3`) + **one Google Drive folder** (`/Daily 3/`) containing three files Gemini reads and writes:
+**One Gem** (`Daily 3`) + **one Google Drive folder** (`/Daily 3/`) containing four files Gemini reads and writes:
 
 | File | Purpose | Writer |
 |---|---|---|
 | `bucket.md` | All open tasks, tagged `compounding` / `maintenance` / `urgent` / `office` | Gemini, every interaction |
 | `completed-log.md` | Timestamped completion history (task + sub-step level) | Gemini, on each tick |
 | `learnings.md` | Patterns Gemini observes about Munish (time-of-day, tag-completion rates, avoidance, etc.) | Gemini, weekly review |
+| `notes.md` | Ambient context drops Munish shares without an explicit prioritization ask | Gemini, listen-only mode |
+
+**Default behavior is listen-only.** Gemini only produces prioritized output (Daily 3, weekly plan, evening wrap, weekly review) on explicit trigger. Otherwise it routes incoming context to `bucket.md` / `learnings.md` / `notes.md` and acknowledges in one line.
+
+## Fixed schedule constraints
+
+Baked into the weekly plan and respected in all sizing:
+
+- Work hours: Mon–Fri 9 AM – 6 PM (day job, blocked)
+- Fri 6 PM – 9 PM: 100x lecture (blocked)
+- Sat 6 PM – 9 PM: 100x lecture (blocked)
+- Claude certification: ≥4 hrs/week in weekly chunks (default Sat & Sun 10 AM – 12 PM)
 
 ## Prioritization algorithm
 
@@ -47,11 +59,13 @@ Gemini detects which mode from what Munish says:
 
 | Trigger | Mode | Action |
 |---|---|---|
+| Anything else (default) | **Listen** | Route to `bucket.md` / `learnings.md` / `notes.md`. One-line ack. No suggestions. |
 | Photo dump + "build my bucket" | **Build bucket** | OCR/transcribe, tag, merge into `bucket.md` (de-dupe) |
 | "Today's 3" / morning ping | **Prioritize** | Read `learnings.md`, then `bucket.md`. Pick 3. Output in template format. |
+| "Weekly plan" / "week ahead" | **Weekly plan** | Read all files. Output visual chart, 12–18 bullets across 7 days, respect fixed events. |
 | "Done X" / "sub-step Y finished" | **Tick** | Update `completed-log.md`, push next sub-step |
 | "Evening wrap" | **Wrap** | Summarize, move slipped tasks back to bucket, one-sentence affirmation |
-| "Weekly review" (Sun default) | **Learn** | Re-read `completed-log.md`, update `learnings.md`, propose silent demotions (Buffett 25/5) |
+| "Weekly review" (Sun default) | **Learn** | Re-read `completed-log.md` + `notes.md`, update `learnings.md`, propose silent demotions (Buffett 25/5) |
 
 ## Growth needle (Munish-specific)
 

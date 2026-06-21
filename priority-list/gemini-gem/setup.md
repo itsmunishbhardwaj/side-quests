@@ -7,10 +7,11 @@ Phone-first usage, but easier to set up on web. After setup, everything works fr
 On any device, in Google Drive:
 
 1. Create a folder named `Daily 3` (root of My Drive is fine).
-2. Inside it, create three docs by uploading or pasting the templates from `drive-templates/` in this repo:
+2. Inside it, create four docs by uploading or pasting the templates from `drive-templates/` in this repo:
    - `bucket.md`
    - `completed-log.md`
    - `learnings.md`
+   - `notes.md`
 
 Note the folder path. You'll reference it in the Gem instructions if Gemini needs help finding the files.
 
@@ -35,10 +36,10 @@ Note the folder path. You'll reference it in the Gem instructions if Gemini need
 In a new chat with the Daily 3 Gem:
 
 ```
-First-run setup. The Drive folder is My Drive > Daily 3, containing bucket.md, completed-log.md, learnings.md. Read all three to confirm access. Then wait for my weekly dump.
+First-run setup. The Drive folder is My Drive > Daily 3, containing bucket.md, completed-log.md, learnings.md, notes.md. Read all four to confirm access. Then wait — listen-only by default.
 ```
 
-Confirm Gemini can read/write the three files. Fix any permission issues now, not later.
+Confirm Gemini can read/write all four files. Fix any permission issues now, not later.
 
 ## 5. Pin to mobile
 
@@ -56,26 +57,33 @@ Build my bucket from this.
 
 Add voice clarifications as needed. Confirm the bucket looks right by asking: `Show me the bucket.`
 
-## 7. Daily flow (from your phone, every morning)
+## 7. Daily / weekly flow (from your phone)
 
+**Default — just talk to it.** Share a thought, a meeting outcome, a half-idea. It listens and files. No suggestions back.
+
+**Sunday evening — plan the week:**
+```
+Weekly plan.
+```
+Get a visual chart for Mon–Sun with 3 (or fewer) bullets per day, work hours blocked, 100x lectures pinned Fri/Sat 6 PM, 4 hrs Claude cert on weekend mornings.
+
+**Each morning — sharpen the day:**
 ```
 Today's 3.
 ```
+Returns 2 needle-movers + 1 urgent, with sub-steps and a Zeigarnik primer.
 
-That's it. Throughout the day, voice or type ticks:
-
+**Throughout the day — tick:**
 ```
 Done with the first Figma sub-step.
 ```
 
-Evening:
-
+**Evening:**
 ```
 Evening wrap.
 ```
 
-Sundays:
-
+**Sundays — meta:**
 ```
 Weekly review.
 ```
