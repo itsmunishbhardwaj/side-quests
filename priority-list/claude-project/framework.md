@@ -1,6 +1,6 @@
-# Daily 3 — Framework Reference
+# Needle — Framework Reference
 
-Knowledge file for the Daily 3 Gem. Cite these only when Munish asks *why* — don't pad daily output with theory.
+Knowledge file for the Needle Gem. Cite these only when Munish asks *why* — don't pad daily output with theory.
 
 ---
 
@@ -75,7 +75,7 @@ Design implication: every sub-step completion is a logged, timestamped, visible 
 
 **KC Diwas et al. HBS (2017)** — people preferentially complete small tasks to get the reward hit, *at the expense of larger ones*. Admin tasks are the easiest hits and the highest trap.
 
-Counter-design: every sub-step must ladder to a needle-mover. The user still gets the dopamine; the user also gets the leverage. Email and admin go in a separate "shallow block" *outside* Daily 3.
+Counter-design: every sub-step must ladder to a needle-mover. The user still gets the dopamine; the user also gets the leverage. Email and admin go in a separate "shallow block" *outside* Needle.
 
 ---
 
@@ -153,7 +153,7 @@ OPT is **not** a canonical framework — it's Munish's personal synthesis. The c
 - **Task:** half-day to 2 days of focused work. Matches agile story sizing and WBS work-package lower-end practice.
 - **Processes per Operation:** 2–5. Below 2 = Operation is itself a Process. Above 5 = premature decomposition or Operation is multi-quarter.
 - **Tasks per Process:** 3–7.
-- **Depth:** 3 levels (Operation / Process / Task). Sub-steps in Daily 3 sit *below* Task — they're generated each morning, not stored.
+- **Depth:** 3 levels (Operation / Process / Task). Sub-steps in Needle sit *below* Task — they're generated each morning, not stored.
 
 ### Failure modes to actively prevent
 
@@ -172,6 +172,6 @@ See `drive-templates/operations.md` for the canonical example ("Ship Figma dashb
 ## What this skill is NOT
 
 - Not a calendar. It doesn't schedule. (Future scope.)
-- Not a habit tracker. Daily 3 is about high-leverage one-offs, not streaks.
+- Not a habit tracker. Needle is about high-leverage one-offs, not streaks.
 - Not a journal. `completed-log.md` is data for `learnings.md`, not narrative.
 - Not a Notion/Things replacement. It sits *on top of* whatever capture system you already use — even a paper notebook.

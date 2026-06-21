@@ -1,4 +1,4 @@
-# Daily 3 — Priority List Skill (Claude Project)
+# Needle — Priority List Skill (Claude Project)
 
 ## Goal
 
@@ -17,7 +17,7 @@ Trade-off: Claude Pro/Max subscription required. User has accepted this.
 
 ## Architecture
 
-**One Claude Project** (`Daily 3`) + **one Google Drive folder** (`/Daily 3/`) + **one Google Calendar** (`Daily 3`).
+**One Claude Project** (`Needle`) + **one Google Drive folder** (`/Needle/`) + **one Google Calendar** (`Needle`).
 
 Five Drive files Claude reads and writes via the Google Drive connector:
 
@@ -29,7 +29,7 @@ Five Drive files Claude reads and writes via the Google Drive connector:
 | `learnings.md` | Patterns Claude observes about Munish (time-of-day, tag-completion rates, avoidance, etc.) | Claude, weekly review |
 | `notes.md` | Ambient context drops Munish shares without an explicit prioritization ask | Claude, listen-only mode |
 
-**Default behavior is listen-only.** Claude only produces prioritized output (Daily 3, weekly plan, evening wrap, weekly review) on explicit trigger. Otherwise it routes incoming context to `bucket.md` / `learnings.md` / `notes.md` and acknowledges in one line.
+**Default behavior is listen-only.** Claude only produces prioritized output (Needle, weekly plan, evening wrap, weekly review) on explicit trigger. Otherwise it routes incoming context to `bucket.md` / `learnings.md` / `notes.md` and acknowledges in one line.
 
 ## Schedule context
 
@@ -44,7 +44,7 @@ Fixed non-office constraints (baked into weekly plan):
 
 ## Prioritization algorithm
 
-Daily 3 = **2 needle-movers + 1 urgent**.
+Needle = **2 needle-movers + 1 urgent**.
 
 1. **Filter office/cohort tasks out** of daily slots by default. Office work surfaces only as a heads-up line when deadline is <48 h.
 2. **Tag everything** in the bucket: `compounding` / `maintenance` / `urgent` / `office`.
@@ -70,7 +70,7 @@ Each of the 3 tasks gets **3–5 sub-steps**, each **15–45 min**.
 | "OPT [name]" / "OPT my bucket" | **OPT decompose** | Operation → Processes (state-named noun phrases, 100% rule) → Tasks (next-action, half-day to 2 days). Rolling-wave: next ~2 weeks only. Written to `operations.md`. Skips `task`-kinded items. |
 | "Today's 3" / morning ping | **Prioritize** | Read `learnings.md`, `bucket.md`, `operations.md`. Pick 3. Sub-steps from current active Tasks if OPT'd, otherwise improvised. Small tasks (≤30 min) appear in `Quick wins` coda, not slots. |
 | "Weekly plan" / "week ahead" | **Weekly plan** | Read all files + Google Calendar via connector. Output text chart, 12–18 bullets across 7 days, respect fixed events. |
-| "Weekly plan to calendar" / "schedule the week" | **Weekly plan → Calendar** | Text chart + creates color-coded events on the `Daily 3` Google Calendar via connector. Clears prior week events on re-run. |
+| "Weekly plan to calendar" / "schedule the week" | **Weekly plan → Calendar** | Text chart + creates color-coded events on the `Needle` Google Calendar via connector. Clears prior week events on re-run. |
 | "Done X" / "sub-step Y finished" | **Tick** | Update `completed-log.md`, push next sub-step |
 | "Evening wrap" | **Wrap** | Summarize, move slipped tasks back to bucket, one-sentence affirmation |
 | "Weekly review" (Sun default) | **Learn** | Re-read `completed-log.md` + `notes.md`, update `learnings.md`, propose silent demotions (Buffett 25/5) |
@@ -118,4 +118,4 @@ priority-list/
 
 - After ~3 weeks, audit `learnings.md` — if patterns look weak/wrong, tighten the weekly review prompt.
 - If Claude routinely picks wrong tasks, refine the "growth needle" section.
-- Consider auto-blocking Deep Work slots on the primary calendar (currently only writes to `Daily 3` calendar).
+- Consider auto-blocking Deep Work slots on the primary calendar (currently only writes to `Needle` calendar).
